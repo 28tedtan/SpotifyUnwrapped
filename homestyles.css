@@ -46,7 +46,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    max-width: 1200px;
+    max-width: 2100px;
     margin: 0 auto;
 }
 
@@ -117,12 +117,13 @@ body {
    font-style: italic; 
    font-weight: 800; 
    word-wrap: break-word;
-   margin-left: 5px;
+   margin-left: 1px;
 }
 
 .content {
     margin: 30px auto;
     padding: 0 20px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 footer {
