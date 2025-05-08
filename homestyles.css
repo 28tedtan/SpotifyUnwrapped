@@ -240,3 +240,52 @@ footer {
 html {
     scroll-padding-top: 90px; /* Helps with scroll anchors accounting for fixed navbar */
 }
+
+
+
+/* styles for main content */
+
+/* From Uiverse.io by felipesntr */ 
+button {
+    font-size: 16px;
+    position: relative;
+    margin: auto;
+    padding: 1em 1.2em 1em 1.2em;
+    border: none;
+    background: #2b2b2b;
+    transition: all 0.1s linear;
+    box-shadow: 0 0.4em 1em rgba(0, 0, 0, 0.1);
+   }
+   
+   button:active {
+    transform: scale(0.95);
+   }
+   
+   button span {
+    color: #fff;
+    font-size: 20px;
+   }
+   
+   button .border {
+    position: absolute;
+    border: 0.15em solid #1DB954;
+    transition: all 0.3s 0.08s linear;
+    top: 50%;
+    left: 50%;
+    width: 12em;
+    height: 3em;
+    transform: translate(-50%, -50%);
+   }
+   
+   button:hover .border {
+    display:block;
+    width: 12.4em;
+    height: 3.9em;
+   }
+   
+   .full-rounded {
+    border-radius: 2em;
+   }
+
+
+
