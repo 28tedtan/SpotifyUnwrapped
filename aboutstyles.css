@@ -9,36 +9,66 @@ White too
 
 */
 
+/* Base styles and theme variables */
+:root {
+    --background-primary: #121212;
+    --background-secondary: #1B1B1B;
+    --background-tertiary: #2B2B2B;
+    --background-elevated: #333333;
+    --accent-color: #1DB954;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B3B3B3;
+    --text-tertiary: #727272;
+    --danger-color: #E61E32;
+    --success-color: #1ED760;
+    --warning-color: #F59B23;
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
+}
 
-/* Styles for About Page */
+/* Theme variations */
+.theme-dark {
+    --background-primary: #121212;
+    --background-secondary: #1B1B1B;
+    --background-tertiary: #2B2B2B;
+    --background-elevated: #333333;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B3B3B3;
+}
+
+.theme-light {
+    --background-primary: #F5F5F5;
+    --background-secondary: #FFFFFF;
+    --background-tertiary: #EEEEEE;
+    --background-elevated: #E0E0E0;
+    --text-primary: #191414;
+    --text-secondary: #535353;
+}
+
 body {
     font-family: 'SF Pro Display', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     margin: 0;
     padding: 0;
-    padding-top: 90px; /* Increased padding to account for the fixed navbar */
-    background-color: #121212;
-    color: #ffffff;
-    text-align: center;
+    padding-top: 90px;
+    background-color: var(--background-primary);
+    color: var(--text-primary);
     overflow-x: hidden;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    line-height: 1.6;
 }
 
-.spotify-logo {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-/* Updated navbar styles */
+/* Navbar styles */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #1B1B1B;
-    color: white;
+    background-color: var(--background-secondary);
+    color: var(--text-primary);
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     height: auto;
+    transition: background-color var(--transition-speed) ease;
 }
 
 .navbar-container {
@@ -57,6 +87,14 @@ body {
     cursor: pointer;
 }
 
+.spotify-logo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: var(--text-primary);
+    transition: color var(--transition-speed) ease;
+}
+
 .nav-menu {
     display: flex;
     list-style: none;
@@ -69,17 +107,17 @@ body {
 }
 
 .nav-link {
-    color: white;
+    color: var(--text-primary);
     text-decoration: none;
     font-size: 16px;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: color var(--transition-speed) ease;
     padding: 5px 0;
     position: relative;
 }
 
-.nav-link:hover {
-    color: #1DB954;
+.nav-link:hover, .nav-link.active {
+    color: var(--accent-color);
 }
 
 .nav-link:after {
@@ -89,28 +127,16 @@ body {
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #1DB954;
-    transition: width 0.3s ease;
+    background-color: var(--accent-color);
+    transition: width var(--transition-speed) ease;
 }
 
-.nav-link:hover:after {
+.nav-link:hover:after, .nav-link.active:after {
     width: 100%;
-}
-
-/* Style for active nav link to show current page */
-.nav-link.active {
-    color: #1DB954;
-    font-weight: 600;
-}
-
-.nav-link.active:after {
-    width: 100%;
-    height: 2px;
-    background-color: #1DB954;
 }
 
 .Unwrapped {
-   color: #1DB954; 
+   color: var(--accent-color); 
    font-size: 24px; 
    font-family: 'Spotify Mix', sans-serif;
    padding: 0; 
@@ -120,32 +146,233 @@ body {
    margin-left: 1px;
 }
 
-.content {
-    margin: 30px auto;
-    padding: 0 20px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+/* About page styles */
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
+.about-hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.1) 0%, rgba(29, 185, 84, 0.05) 100%);
+    border-radius: var(--border-radius);
+    margin-bottom: 40px;
+}
+
+.about-hero h1 {
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    background: linear-gradient(45deg, var(--accent-color), #4CAF50);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
+
+.subtitle {
+    font-size: 20px;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.about-section {
+    margin-bottom: 60px;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    background-color: var(--background-tertiary);
+    transition: transform 0.3s ease, background-color var(--transition-speed) ease;
+}
+
+.about-section:hover {
+    transform: translateY(-5px);
+}
+
+.alt-section {
+    background-color: var(--background-secondary);
+}
+
+.about-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.reverse {
+    flex-direction: row-reverse;
+}
+
+.about-image {
+    flex: 1;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.about-image:hover img {
+    transform: scale(1.03);
+}
+
+.about-text {
+    flex: 1;
+}
+
+.about-text h2 {
+    font-size: 32px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.about-text h2:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
+}
+
+.about-text p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: var(--text-secondary);
+}
+
+.feature-list {
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.feature-list li {
+    margin-bottom: 10px;
+    position: relative;
+    color: var(--text-secondary);
+}
+
+.feature-list li:before {
+    content: '•';
+    color: var(--accent-color);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.team-image {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+}
+
+.team-member {
+    text-align: center;
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent-color);
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.team-member:hover img {
+    transform: scale(1.1);
+}
+
+.team-member span {
+    display: block;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--text-primary);
+}
+
+.cta-section {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.2) 0%, rgba(29, 185, 84, 0.1) 100%);
+    border-radius: var(--border-radius);
+    margin-bottom: 40px;
+}
+
+.cta-section h2 {
+    font-size: 32px;
+    margin-bottom: 16px;
+}
+
+.cta-section p {
+    font-size: 18px;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(29, 185, 84, 0.3);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(29, 185, 84, 0.4);
+    background-color: #15a346;
+}
+
+/* Footer styles */
 footer {
     text-align: center;
     margin-top: 40px;
     padding: 20px;
     font-size: 0.9em;
-    background-color: #1B1B1B;
+    background-color: var(--background-secondary);
     position: relative;
     bottom: 0;
     width: 100%;
+    transition: background-color var(--transition-speed) ease;
 }
 
-.highlight {
-    background: linear-gradient(135deg, #7003be 2%, #e80303b1 100%);
-    color: rgb(255, 250, 250); /* Text color for highlighted text */
-    font-weight: bold; /* Make the highlighted text bold */
-    border-radius: 5px;
-    padding: 2px 5px;
+/* Responsive styles */
+@media (max-width: 991px) {
+    .about-content {
+        flex-direction: column;
+    }
+    
+    .reverse {
+        flex-direction: column;
+    }
+    
+    .about-image {
+        margin-bottom: 20px;
+    }
+    
+    .team-image {
+        flex-direction: row;
+    }
 }
 
-/* Responsive styles for mobile devices */
 @media (max-width: 768px) {
     .navbar-container {
         flex-direction: column;
@@ -163,11 +390,36 @@ footer {
     }
     
     body {
-        padding-top: 140px; /* Increased padding for mobile */
+        padding-top: 140px;
+    }
+    
+    .about-hero h1 {
+        font-size: 32px;
+    }
+    
+    .subtitle {
+        font-size: 18px;
+    }
+    
+    .about-text h2 {
+        font-size: 28px;
+    }
+    
+    .about-section {
+        padding: 15px;
+    }
+    
+    .team-image {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .team-member {
+        margin-bottom: 20px;
     }
 }
 
 /* Make sure the navbar stays on top across all pages */
 html {
-    scroll-padding-top: 90px; /* Helps with scroll anchors accounting for fixed navbar */
+    scroll-padding-top: 90px;
 }

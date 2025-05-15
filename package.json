@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "current": "^0.1.6"
+  },
+  "name": "spotifyunwrapped",
+  "description": "Track your Spotify and share with friends Still programming...",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
