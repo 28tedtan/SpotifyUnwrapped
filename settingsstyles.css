@@ -1,44 +1,62 @@
-/* 
-Font: SpotifyMix Bold
-Unwrapped font: SpotifyMix Ultrabold Italic
-Font for plaintext: Plus Jakarta Sans
-Background colours: 1B1B1B
-2nd colour: 2B2B2B
-Accent colour: 1DB954
-White too
+/* Base styles */
+:root {
+    --background-primary: #121212;
+    --background-secondary: #1B1B1B;
+    --background-tertiary: #2B2B2B;
+    --background-elevated: #333333;
+    --accent-color: #1DB954;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B3B3B3;
+    --text-tertiary: #727272;
+    --danger-color: #E61E32;
+    --success-color: #1ED760;
+    --warning-color: #F59B23;
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
+}
 
-*/
+/* Theme variations */
+.theme-dark {
+    --background-primary: #121212;
+    --background-secondary: #1B1B1B;
+    --background-tertiary: #2B2B2B;
+    --background-elevated: #333333;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B3B3B3;
+}
 
+.theme-light {
+    --background-primary: #F5F5F5;
+    --background-secondary: #FFFFFF;
+    --background-tertiary: #EEEEEE;
+    --background-elevated: #E0E0E0;
+    --text-primary: #191414;
+    --text-secondary: #535353;
+}
 
-/* Styles for About Page */
 body {
     font-family: 'SF Pro Display', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     margin: 0;
     padding: 0;
-    padding-top: 90px; /* Increased padding to account for the fixed navbar */
-    background-color: #121212;
-    color: #ffffff;
-    text-align: center;
+    padding-top: 90px;
+    background-color: var(--background-primary);
+    color: var(--text-primary);
     overflow-x: hidden;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
-.spotify-logo {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-/* Updated navbar styles */
+/* Navbar styles */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #1B1B1B;
-    color: white;
+    background-color: var(--background-secondary);
+    color: var(--text-primary);
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     height: auto;
+    transition: background-color var(--transition-speed) ease;
 }
 
 .navbar-container {
@@ -57,6 +75,14 @@ body {
     cursor: pointer;
 }
 
+.spotify-logo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: var(--text-primary);
+    transition: color var(--transition-speed) ease;
+}
+
 .nav-menu {
     display: flex;
     list-style: none;
@@ -69,17 +95,17 @@ body {
 }
 
 .nav-link {
-    color: white;
+    color: var(--text-primary);
     text-decoration: none;
     font-size: 16px;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: color var(--transition-speed) ease;
     padding: 5px 0;
     position: relative;
 }
 
-.nav-link:hover {
-    color: #1DB954;
+.nav-link:hover, .nav-link.active {
+    color: var(--accent-color);
 }
 
 .nav-link:after {
@@ -89,28 +115,16 @@ body {
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #1DB954;
-    transition: width 0.3s ease;
+    background-color: var(--accent-color);
+    transition: width var(--transition-speed) ease;
 }
 
-.nav-link:hover:after {
+.nav-link:hover:after, .nav-link.active:after {
     width: 100%;
-}
-
-/* Style for active nav link to show current page */
-.nav-link.active {
-    color: #1DB954;
-    font-weight: 600;
-}
-
-.nav-link.active:after {
-    width: 100%;
-    height: 2px;
-    background-color: #1DB954;
 }
 
 .Unwrapped {
-   color: #1DB954; 
+   color: var(--accent-color); 
    font-size: 24px; 
    font-family: 'Spotify Mix', sans-serif;
    padding: 0; 
@@ -120,32 +134,231 @@ body {
    margin-left: 1px;
 }
 
-.content {
-    margin: 30px auto;
-    padding: 0 20px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+/* Settings specific styles */
+.settings-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
+.settings-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.settings-section {
+    background-color: var(--background-tertiary);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color var(--transition-speed) ease;
+}
+
+.settings-section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.settings-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-item:last-child {
+    border-bottom: none;
+}
+
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.theme-label {
+    margin: 0 10px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: var(--accent-color);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--accent-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Switch styling */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--text-tertiary);
+    transition: .4s;
+}
+
+.switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+.switch input:checked + .slider {
+    background-color: var(--accent-color);
+}
+
+.switch input:focus + .slider {
+    box-shadow: 0 0 1px var(--accent-color);
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+/* Button styling */
+.action-button {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.action-button:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.action-button:active {
+    transform: scale(0.95);
+}
+
+.action-button.secondary {
+    background-color: var(--background-elevated);
+    color: var(--text-primary);
+}
+
+.action-button.warning {
+    background-color: var(--danger-color);
+}
+
+/* Connection status indicator */
+.connection-status {
+    display: flex;
+    align-items: center;
+}
+
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.status-indicator.connected {
+    background-color: var(--success-color);
+    box-shadow: 0 0 5px var(--success-color);
+}
+
+.status-indicator.disconnected {
+    background-color: var(--danger-color);
+    box-shadow: 0 0 5px var(--danger-color);
+}
+
+/* Footer styles */
 footer {
     text-align: center;
     margin-top: 40px;
     padding: 20px;
     font-size: 0.9em;
-    background-color: #1B1B1B;
+    background-color: var(--background-secondary);
     position: relative;
     bottom: 0;
     width: 100%;
+    transition: background-color var(--transition-speed) ease;
 }
 
-.highlight {
-    background: linear-gradient(135deg, #7003be 2%, #e80303b1 100%);
-    color: rgb(255, 250, 250); /* Text color for highlighted text */
-    font-weight: bold; /* Make the highlighted text bold */
-    border-radius: 5px;
-    padding: 2px 5px;
-}
-
-/* Responsive styles for mobile devices */
+/* Responsive styles */
 @media (max-width: 768px) {
     .navbar-container {
         flex-direction: column;
@@ -163,11 +376,16 @@ footer {
     }
     
     body {
-        padding-top: 140px; /* Increased padding for mobile */
+        padding-top: 140px;
     }
-}
-
-/* Make sure the navbar stays on top across all pages */
-html {
-    scroll-padding-top: 90px; /* Helps with scroll anchors accounting for fixed navbar */
+    
+    .settings-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .settings-item > *:last-child {
+        margin-top: 10px;
+        align-self: flex-end;
+    }
 }
