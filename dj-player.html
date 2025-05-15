@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DJ-Style Vinyl Player (Smooth Scrub)</title>
+  <style>
+    body {
+      background: #111;
+      color: #eee;
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+    .player {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      margin: 0 auto;
+    }
+    #vinyl {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #555 0%, #111 60%, #000 100%);
+      box-shadow:
+        inset 0 0 30px rgba(0,0,0,0.8),
+        0 0 20px rgba(0,0,0,0.5);
+      cursor: grab;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+      transition: cursor 0.2s;
+    }
+    #vinyl::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 80px; height: 80px;
+      margin: -40px 0 0 -40px;
+      background: radial-gradient(circle, #c00 0%, #900 70%);
+      border-radius: 50%;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.7);
+    }
+    #playPause {
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #c00;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #fileInput {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>DJ-Style Vinyl Player</h1>
+  <input type="file" id="fileInput" accept="audio/*"><br>
+
+  <div class="player">
+    <div id="vinyl"></div>
+    <button id="playPause">Play</button>
+  </div>
+
+  <audio id="audio"></audio>
+
+  <script>
+    const vinyl = document.getElementById('vinyl');
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('playPause');
+    const fileInput = document.getElementById('fileInput');
+
+    // === load file ===
+    fileInput.addEventListener('change', e => {
+      const f = e.target.files[0];
+      if (!f) return;
+      audio.src = URL.createObjectURL(f);
+      audio.load();
+      playBtn.textContent = 'Play';
+    });
+
+    // === play / pause ===
+    let wasPlaying = false;
+    function togglePlay() {
+      if (!audio.src) return;
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = 'Pause';
+      } else {
+        audio.pause();
+        playBtn.textContent = 'Play';
+      }
+    }
+    playBtn.addEventListener('click', togglePlay);
+    vinyl.addEventListener('click', togglePlay);
+
+    // === rotate in playback ===
+    audio.addEventListener('timeupdate', () => {
+      if (!audio.duration) return;
+      const deg = (audio.currentTime / audio.duration) * 360;
+      vinyl.style.transform = `rotate(${deg}deg)`;
+    });
+
+    // === smooth momentum scrubbing ===
+    let scrubbing = false;
+    let scrubVel = 0;
+    let lastTime = 0;
+
+    vinyl.addEventListener('wheel', e => {
+      e.preventDefault();
+      if (!audio.duration) return;
+
+      // On first wheel event, start scrubbing loop
+      if (!scrubbing) {
+        scrubbing = true;
+        wasPlaying = !audio.paused;
+        audio.pause();
+        lastTime = performance.now();
+        requestAnimationFrame(scrubLoop);
+      }
+
+      // accumulate velocity (tweak 0.005 to change sensitivity)
+      scrubVel += -e.deltaY * 0.005;
+      vinyl.style.cursor = 'grabbing';
+    });
+
+    function scrubLoop(now) {
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      // apply velocity to currentTime
+      let nt = audio.currentTime + scrubVel * dt;
+      // clamp
+      audio.currentTime = Math.min(Math.max(nt, 0), audio.duration);
+
+      // update vinyl rotation
+      const deg = (audio.currentTime / audio.duration) * 360;
+      vinyl.style.transform = `rotate(${deg}deg)`;
+
+      // decay velocity
+      scrubVel *= 0.90;
+      if (Math.abs(scrubVel) > 0.001) {
+        requestAnimationFrame(scrubLoop);
+      } else {
+        // end scrubbing
+        scrubbing = false;
+        vinyl.style.cursor = 'grab';
+        scrubVel = 0;
+        if (wasPlaying) audio.play();
+      }
+    }
+  </script>
+
+</body>
+</html>
