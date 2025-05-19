@@ -2,161 +2,535 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>DJ-Style Vinyl Player (Smooth Scrub)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vinyl Record Player</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      background: #111;
-      color: #eee;
-      font-family: sans-serif;
-      text-align: center;
-      padding-top: 50px;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f0f4ff 0%, #f9f0ff 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
     }
+
+    /* Player container */
     .player {
-      position: relative;
-      width: 320px;
-      height: 320px;
-      margin: 0 auto;
-    }
-    #vinyl {
+      max-width: 1024px;
       width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: radial-gradient(circle at center, #555 0%, #111 60%, #000 100%);
-      box-shadow:
-        inset 0 0 30px rgba(0,0,0,0.8),
-        0 0 20px rgba(0,0,0,0.5);
-      cursor: grab;
-      user-select: none;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+    }
+
+    .player-content {
+      display: flex;
+      gap: 2rem;
+    }
+
+    /* Turntable section */
+    .turntable {
+      flex: 1;
       position: relative;
-      overflow: hidden;
-      transition: cursor 0.2s;
+      background: #f8f9fa;
+      border-radius: 0.75rem;
+      padding: 2rem;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
     }
-    #vinyl::before {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 80px; height: 80px;
-      margin: -40px 0 0 -40px;
-      background: radial-gradient(circle, #c00 0%, #900 70%);
+
+    /* Vinyl disc */
+    .vinyl {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      background: #1a1a1a;
       border-radius: 50%;
-      box-shadow: inset 0 0 5px rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.5s ease;
     }
-    #playPause {
+
+    .vinyl.playing {
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Vinyl grooves */
+    .grooves {
       position: absolute;
-      bottom: -50px;
+      inset: 0;
+      opacity: 0.2;
+    }
+
+    .groove {
+      position: absolute;
+      inset: 0;
+      border: 1px solid #666;
+      border-radius: 50%;
+    }
+
+    /* Album label */
+    .label {
+      width: 33.333%;
+      height: 33.333%;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Tone arm */
+    .tone-arm {
+      position: absolute;
+      right: -1rem;
+      top: 3rem;
+      width: 6rem;
+      height: 16rem;
+      pointer-events: none;
+    }
+
+    .tone-arm-base {
+      position: absolute;
+      bottom: 0;
+      right: 1rem;
+      width: 3rem;
+      height: 3rem;
+      background: linear-gradient(135deg, #2d3436 0%, #1a1a1a 100%);
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .tone-arm-body {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 2.5rem;
+      width: 0.5rem;
+      height: 12rem;
+      background: linear-gradient(90deg, #4a4a4a 0%, #2d2d2d 100%);
+      border-radius: 0.25rem;
+      transform: rotate(-45deg);
+      transform-origin: bottom center;
+      transition: transform 0.7s ease-in-out;
+    }
+
+    .playing .tone-arm-body {
+      transform: rotate(-10deg);
+    }
+
+    .tone-arm-head {
+      position: absolute;
+      top: 0;
+      left: -0.5rem;
+      width: 1.5rem;
+      height: 2.5rem;
+      background: linear-gradient(90deg, #2d2d2d 0%, #1a1a1a 100%);
+      border-radius: 0.25rem;
+      transform: rotate(-15deg);
+    }
+
+    .stylus {
+      position: absolute;
+      bottom: 0;
       left: 50%;
+      width: 0.125rem;
+      height: 1rem;
+      background: #ff4757;
       transform: translateX(-50%);
-      background: #c00;
-      border: none;
-      color: #fff;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 4px;
+    }
+
+    /* Controls */
+    .controls {
+      margin-top: 1.5rem;
+      padding: 0 1rem;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 0.25rem;
+      background: #e9ecef;
+      border-radius: 0.125rem;
+      margin-bottom: 1rem;
       cursor: pointer;
     }
-    #fileInput {
-      margin-bottom: 20px;
+
+    .progress {
+      height: 100%;
+      background: #4a90e2;
+      border-radius: 0.125rem;
+      transition: width 0.1s linear;
+    }
+
+    .control-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .time {
+      font-size: 0.875rem;
+      color: #666;
+    }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background: #f0f0f0;
+    }
+
+    .play-button {
+      width: 3rem;
+      height: 3rem;
+      background: #4a90e2;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .play-button:hover {
+      background: #357abd;
+    }
+
+    /* Music details */
+    .music-details {
+      width: 16rem;
+      background: #f8f9fa;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+    }
+
+    .cover-art {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .song-info h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    .song-info p {
+      color: #666;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+    }
+
+    /* Updated YouTube input styles */
+    .youtube-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e1e1e1;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+      background: white;
+      color: #333;
+    }
+
+    .youtube-input:focus {
+      outline: none;
+      border-color: #4a90e2;
+      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    }
+
+    .youtube-input::placeholder {
+      color: #999;
+    }
+
+    /* Input container */
+    .input-container {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .input-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #666;
     }
   </style>
 </head>
 <body>
-
-  <h1>DJ-Style Vinyl Player</h1>
-  <input type="file" id="fileInput" accept="audio/*"><br>
-
   <div class="player">
-    <div id="vinyl"></div>
-    <button id="playPause">Play</button>
+    <div class="player-content">
+      <!-- Turntable section -->
+      <div class="turntable">
+        <div class="vinyl">
+          <div class="grooves">
+            <!-- Generated by JavaScript -->
+          </div>
+          <div class="label" style="background-image: url('https://images.pexels.com/photos/167092/pexels-photo-167092.jpeg')"></div>
+        </div>
+        <div class="tone-arm">
+          <div class="tone-arm-base"></div>
+          <div class="tone-arm-body">
+            <div class="tone-arm-head">
+              <div class="stylus"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Music details -->
+      <div class="music-details">
+        <img class="cover-art" src="https://images.pexels.com/photos/167092/pexels-photo-167092.jpeg" alt="Album cover">
+        <div class="song-info">
+          <h2>Play YouTube Music</h2>
+          <p>Enter a YouTube video URL below to start playing</p>
+          <div class="input-container">
+            <label for="youtube-url" class="input-label">YouTube URL</label>
+            <input 
+              type="text" 
+              id="youtube-url"
+              class="youtube-input" 
+              placeholder="Paste YouTube URL here"
+            />
+            <button id="load-music" style="margin-top:0.5rem; margin-left:0.5rem; padding:0.5rem 1rem; border-radius:0.5rem; background:#4a90e2; color:white; border:none; cursor:pointer; font-weight:500;">Load Music</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="progress-bar">
+        <div class="progress" style="width: 0%"></div>
+      </div>
+      <div class="control-buttons">
+        <span class="time">0:00 / 0:00</span>
+        <div class="buttons">
+          <button class="play-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </button>
+          <button class="fullscreen-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <audio id="audio"></audio>
-
+  <!-- YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-    const vinyl = document.getElementById('vinyl');
-    const audio = document.getElementById('audio');
-    const playBtn = document.getElementById('playPause');
-    const fileInput = document.getElementById('fileInput');
+    // Create vinyl grooves
+    const grooves = document.querySelector('.grooves');
+    for (let i = 0; i < 20; i++) {
+      const groove = document.createElement('div');
+      groove.className = 'groove';
+      groove.style.transform = scale(${0.2 + i * 0.04});
+      grooves.appendChild(groove);
+    }
 
-    // === load file ===
-    fileInput.addEventListener('change', e => {
-      const f = e.target.files[0];
-      if (!f) return;
-      audio.src = URL.createObjectURL(f);
-      audio.load();
-      playBtn.textContent = 'Play';
+    let player;
+    let isPlaying = false;
+    let playerReady = false;
+    const vinyl = document.querySelector('.vinyl');
+    const playButton = document.querySelector('.play-button');
+    const progress = document.querySelector('.progress');
+    const progressBar = document.querySelector('.progress-bar');
+    const timeDisplay = document.querySelector('.time');
+    const fullscreenButton = document.querySelector('.fullscreen-button');
+    const youtubeInput = document.querySelector('.youtube-input');
+    const loadMusicButton = document.getElementById('load-music');
+
+    // Initialize YouTube Player
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('youtube-player', {
+        height: '0',
+        width: '0',
+        playerVars: {
+          'playsinline': 1,
+          'controls': 0
+        },
+        events: {
+          'onStateChange': onPlayerStateChange,
+          'onReady': onPlayerReady
+        }
+      });
+    }
+
+    function onPlayerReady() {
+      playerReady = true;
+      console.log('YouTube Player is ready');
+      setInterval(updateProgress, 1000);
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        isPlaying = false;
+        vinyl.classList.remove('playing');
+        updatePlayButton();
+      }
+    }
+
+    // Improved YouTube URL detection
+    function getYouTubeId(url) {
+        // Handle YouTube Music URLs
+        if (url.includes('music.youtube.com')) {
+            const musicMatch = url.match(/[?&]v=([^&]+)/);
+            if (musicMatch) return musicMatch[1];
+        }
+        
+        // Handle regular YouTube URLs
+        const regExp = /^.((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]).*/;
+        const match = url.match(regExp);
+        return (match && match[7].length === 11) ? match[7] : false;
+    }
+
+    // Only load video when button is clicked
+    loadMusicButton.addEventListener('click', () => {
+        const url = youtubeInput.value.trim();
+        const videoId = getYouTubeId(url);
+        if (videoId) {
+            youtubeInput.style.borderColor = '#4CAF50';
+            if (player && player.loadVideoById) {
+                player.loadVideoById(videoId);
+                console.log('Loaded video ID:', videoId);
+            } else {
+                console.error('Player not ready yet.');
+            }
+            isPlaying = false;
+            vinyl.classList.remove('playing');
+            updatePlayButton();
+            document.querySelector('.song-info h2').textContent = 'Ready to Play';
+            document.querySelector('.song-info p').textContent = 'Press play or space bar to start';
+        } else {
+            youtubeInput.style.borderColor = url ? '#ff4757' : '#e1e1e1';
+            console.error('Invalid YouTube URL');
+        }
     });
 
-    // === play / pause ===
-    let wasPlaying = false;
     function togglePlay() {
-      if (!audio.src) return;
-      if (audio.paused) {
-        audio.play();
-        playBtn.textContent = 'Pause';
-      } else {
-        audio.pause();
-        playBtn.textContent = 'Play';
+      if (!player || typeof player.playVideo !== 'function') {
+        console.error('Player not ready for play');
+        return;
       }
+      if (isPlaying) {
+        player.pauseVideo();
+        vinyl.classList.remove('playing');
+        isPlaying = false;
+        console.log('Paused');
+      } else {
+        player.playVideo();
+        vinyl.classList.add('playing');
+        isPlaying = true;
+        console.log('Playing');
+      }
+      updatePlayButton();
     }
-    playBtn.addEventListener('click', togglePlay);
-    vinyl.addEventListener('click', togglePlay);
 
-    // === rotate in playback ===
-    audio.addEventListener('timeupdate', () => {
-      if (!audio.duration) return;
-      const deg = (audio.currentTime / audio.duration) * 360;
-      vinyl.style.transform = `rotate(${deg}deg)`;
+    function updatePlayButton() {
+      playButton.innerHTML = isPlaying ? 
+        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>' :
+        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+    }
+
+    function updateProgress() {
+      if (!player || !isPlaying) return;
+      
+      const currentTime = player.getCurrentTime() || 0;
+      const duration = player.getDuration() || 0;
+      const percent = (currentTime / duration) * 100;
+      
+      progress.style.width = percent + '%';
+      
+      const currentMinutes = Math.floor(currentTime / 60);
+      const currentSeconds = Math.floor(currentTime % 60);
+      const durationMinutes = Math.floor(duration / 60);
+      const durationSeconds = Math.floor(duration % 60);
+      
+      timeDisplay.textContent = ${currentMinutes}:${currentSeconds.toString().padStart(2, '0')} / ${durationMinutes}:${durationSeconds.toString().padStart(2, '0')};
+    }
+
+    // Click progress bar to seek
+    progressBar.addEventListener('click', (e) => {
+      if (!player) return;
+      
+      const rect = progressBar.getBoundingClientRect();
+      const percent = (e.clientX - rect.left) / rect.width;
+      const duration = player.getDuration();
+      player.seekTo(percent * duration);
     });
 
-    // === smooth momentum scrubbing ===
-    let scrubbing = false;
-    let scrubVel = 0;
-    let lastTime = 0;
-
-    vinyl.addEventListener('wheel', e => {
+    // Scroll to seek
+    document.addEventListener('wheel', (e) => {
+      if (!player) return;
+      
       e.preventDefault();
-      if (!audio.duration) return;
-
-      // On first wheel event, start scrubbing loop
-      if (!scrubbing) {
-        scrubbing = true;
-        wasPlaying = !audio.paused;
-        audio.pause();
-        lastTime = performance.now();
-        requestAnimationFrame(scrubLoop);
-      }
-
-      // accumulate velocity (tweak 0.005 to change sensitivity)
-      scrubVel += -e.deltaY * 0.005;
-      vinyl.style.cursor = 'grabbing';
+      const currentTime = player.getCurrentTime();
+      const seekAmount = e.deltaY > 0 ? -2 : 2;
+      player.seekTo(Math.max(0, Math.min(player.getDuration(), currentTime + seekAmount)));
     });
 
-    function scrubLoop(now) {
-      const dt = (now - lastTime) / 1000;
-      lastTime = now;
-
-      // apply velocity to currentTime
-      let nt = audio.currentTime + scrubVel * dt;
-      // clamp
-      audio.currentTime = Math.min(Math.max(nt, 0), audio.duration);
-
-      // update vinyl rotation
-      const deg = (audio.currentTime / audio.duration) * 360;
-      vinyl.style.transform = `rotate(${deg}deg)`;
-
-      // decay velocity
-      scrubVel *= 0.90;
-      if (Math.abs(scrubVel) > 0.001) {
-        requestAnimationFrame(scrubLoop);
-      } else {
-        // end scrubbing
-        scrubbing = false;
-        vinyl.style.cursor = 'grab';
-        scrubVel = 0;
-        if (wasPlaying) audio.play();
+    // Space bar to toggle play/pause
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        togglePlay();
       }
-    }
+    });
+
+    // Fullscreen toggle
+    fullscreenButton.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    // Event listeners
+    playButton.addEventListener('click', togglePlay);
   </script>
 
+  <!-- Hidden YouTube Player -->
+  <div id="youtube-player" style="display:none;"></div>
 </body>
 </html>
