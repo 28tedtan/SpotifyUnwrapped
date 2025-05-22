@@ -1,207 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>About - Spotify Unwrapped</title>
-    <link rel="stylesheet" href="aboutstyles.css" />
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-
-        .theme-toggle {
-            cursor: pointer;
-            font-size: 0.9rem;
-            padding: 6px 12px;
-            background: transparent;
-            border: 1px solid currentColor;
-            border-radius: 8px;
-            margin-left: auto;
-        }
-
-        .faq-question {
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 1em;
-        }
-
-        .faq-answer {
-            display: none;
-            margin-bottom: 1em;
-        }
-
-        .team-member:hover small {
-            display: inline-block;
-        }
-
-        .team-member small {
-            display: none;
-            font-size: 0.8rem;
-            color: gray;
-        }
-
-        .spotify-login {
-            padding: 12px 20px;
-            background-color: #1db954;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - Spotify Unwrapped</title>
+  <link rel="stylesheet" href="aboutstyles.css" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 220px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: -220px;
+      background: linear-gradient(180deg, #1DB954 0%, #121212 100%);
+      border-right: 1px solid #444;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      z-index: 1000;
+      transition: left 0.3s ease;
+    }
+    .sidebar:hover {
+      left: 0;
+    }
+    .sidebar .nav-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .sidebar .nav-menu li {
+      text-align: left;
+    }
+    .sidebar .nav-menu .nav-link {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+    .sidebar .nav-menu .nav-link:hover {
+      color: var(--accent-color);
+    }
+    .content {
+      margin-left: 0;
+      padding: 2rem;
+      flex: 1;
+      transition: margin-left 0.3s ease;
+    }
+    .sidebar:hover ~ .content {
+      margin-left: 220px;
+    }
+  </style>
 </head>
 
 <body>
-    <nav class="navbar">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="logo">
+        <a href="HomePage.html" class="navbar-logo">
+          <div class="spotify-logo">
+            <div class="Unwrapped">Unwrapped</div>
+          </div>
+        </a>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="#mission" class="nav-link">Mission</a></li>
+        <li><a href="#how-it-works" class="nav-link">How it works</a></li>
+        <li><a href="#privacy" class="nav-link">Privacy</a></li>
+        <li><a href="#team" class="nav-link">Team</a></li>
+      </ul>
+    </aside>
+
+    <main class="content">
+      <div class="navbar">
         <div class="navbar-container">
-            <a href="HomePage.html" class="navbar-logo">
-                <div class="spotify-logo">
-                    <!-- logo SVG kept -->
-                    <div class="Unwrapped">Unwrapped</div>
-                </div>
-            </a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="HomePage.html" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="friends.html" class="nav-link">Friends</a></li>
-                <li class="nav-item"><a href="#mission" class="nav-link">Mission</a></li>
-                <li class="nav-item"><a href="#how-it-works" class="nav-link">How it works</a></li>
-                <li class="nav-item"><a href="#privacy" class="nav-link">Privacy</a></li>
-                <li class="nav-item"><a href="#team" class="nav-link">Team</a></li>
-                <li class="nav-item"><a href="settings.html" class="nav-link">Settings</a></li>
-            </ul>
-            <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+          <a href="HomePage.html" class="navbar-logo">
+            <div class="spotify-logo">
+              <div class="Unwrapped">Unwrapped</div>
+            </div>
+          </a>
+          <ul class="nav-menu">
+            <li class="nav-item"><a href="HomePage.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="friends.html" class="nav-link">Friends</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link active">About</a></li>
+            <li class="nav-item"><a href="settings.html" class="nav-link">Settings</a></li>
+          </ul>
         </div>
-    </nav>
+      </div>
 
-    <div class="about-container">
-        <section class="about-hero">
-            <h1>About Spotify Unwrapped</h1>
-            <p class="subtitle">Discover your music journey all year round, not only in December.</p>
-        </section>
+      <div class="about-container">
+  <section class="about-hero">
+    <h1>About Spotify Unwrapped</h1>
+    <p class="subtitle">Discover your music journey all year round, not only in December.</p>
+  </section>
 
-        <section class="about-section" id="mission">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2>Our Mission</h2>
-                    <p>Spotify Unwrapped was created to give music lovers insights into their listening habits throughout the year.</p>
-                    <p>We believe that understanding your music tastes can help you connect with others who share similar preferences.</p>
-                    <p><small>We do not profit from Spotify, ads or in any way.</small></p>
-                </div>
-            </div>
-        </section>
-
-        <section class="about-section alt-section" id="how-it-works">
-            <div class="about-content reverse">
-                <div class="about-text">
-                    <h2>How It Works</h2>
-                    <p>We use the Spotify API to provide insights about your:</p>
-                    <ul class="feature-list">
-                        <li>Top artists and tracks</li>
-                        <li>Genre evolution</li>
-                        <li>Listening patterns</li>
-                        <li>Music compatibility with friends</li>
-                        <li>Personalized recommendations</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="about-section" id="privacy">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2>Privacy & Data</h2>
-                    <ul class="feature-list">
-                        <li>Only accesses what you approve</li>
-                        <li>Never sells your data</li>
-                        <li>Allows friend-sharing control</li>
-                        <li>You can delete your data anytime</li>
-                        <li>Secure login via Spotify OAuth</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="about-section alt-section" id="team">
-            <div class="about-content reverse">
-                <div class="about-text">
-                    <h2>Meet the Team</h2>
-                    <p>Ted and Kmy – just two 15-year-olds from Singapore experimenting with Spotify tech out of boredom!</p>
-                </div>
-                <div class="about-image team-image">
-                    <div class="team-member">
-                        <img src="..." alt="Ted" />
-                        <span>Ted</span>
-                        <small>Loves code & EDM</small>
-                    </div>
-                    <div class="team-member">
-                        <img src="..." alt="Kmy" />
-                        <span>Kmy</span>
-                        <small>Always sleeping zzz</small>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="about-section">
-            <h2>Frequently Asked Questions (FAQ)</h2>
-            <div class="faq">
-                <div class="faq-question">🔒 Is my data safe?</div>
-                <div class="faq-answer">Yes, we use secure Spotify authentication and never store personal data without permission.</div>
-
-                <div class="faq-question">🎧 Do I need Spotify Premium?</div>
-                <div class="faq-answer">Nope! Any Spotify account will work.</div>
-
-                <div class="faq-question">🧠 How is this different from Spotify Wrapped?</div>
-                <div class="faq-answer">Spotify Unwrapped updates anytime – not just once a year!</div>
-            </div>
-        </section>
-
-        <section class="cta-section">
-            <h2>So, ready to unwrap your music journey?</h2>
-            <a href="#" class="spotify-login">Connect with Spotify</a>
-        </section>
+  <section class="about-section" id="mission">
+    <div class="about-text">
+      <h2>Our Mission</h2>
+      <p>Spotify Unwrapped was created to give music lovers insights into their listening habits throughout the year.</p>
+      <p>We believe that understanding your music tastes can help you connect with others who share similar preferences.</p>
+      <p><small>We do not profit from Spotify, ads or in any way.</small></p>
     </div>
+  </section>
 
-    <footer>
-        <p>Made with ❤️ by Ted & Kmy. Inspired by Spotify©</p>
-    </footer>
+  <section class="about-section alt-section" id="how-it-works">
+    <div class="about-text">
+      <h2>How It Works</h2>
+      <p>We use the Spotify API to provide insights about your:</p>
+      <ul class="feature-list">
+        <li>Top artists and tracks</li>
+        <li>Genre evolution</li>
+        <li>Listening patterns</li>
+        <li>Music compatibility with friends</li>
+        <li>Personalized recommendations</li>
+      </ul>
+    </div>
+  </section>
 
-    <script>
-        // Theme toggle logic
-        function toggleTheme() {
-            const body = document.body;
-            if (body.classList.contains('theme-dark')) {
-                body.classList.replace('theme-dark', 'theme-light');
-                localStorage.setItem('theme', 'light');
-            } else {
-                body.classList.replace('theme-light', 'theme-dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        }
+  <section class="about-section" id="privacy">
+    <div class="about-text">
+      <h2>Privacy & Data</h2>
+      <ul class="feature-list">
+        <li>Only accesses what you approve</li>
+        <li>Never sells your data</li>
+        <li>Allows friend-sharing control</li>
+        <li>You can delete your data anytime</li>
+        <li>Secure login via Spotify OAuth</li>
+      </ul>
+    </div>
+  </section>
 
-        // Load theme from localStorage or system
-        window.onload = () => {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.body.className = `theme-${savedTheme}`;
-            } else {
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                document.body.className = prefersDark ? 'theme-dark' : 'theme-light';
-            }
+  <section class="about-section alt-section" id="team">
+    <div class="about-text">
+      <h2>Meet the Team</h2>
+      <p>Ted and Kmy – just two 15-year-olds from Singapore experimenting with Spotify tech out of boredom!</p>
+    </div>
+    <div class="team-image">
+      <div class="team-member">
+        <img src="https://media.discordapp.net/attachments/1349017318642159641/1365673606130171914/IMG_0090.jpg?ex=682493a8&is=68234228&hm=640e1fcdfb7d2606adbc02068720b44f2e87461f50e2a4d8709714b55dfdf65a&=&format=webp&width=2130&height=1597" alt="Ted" />
+        <span>Ted</span>
+        <small>Loves code & EDM</small>
+      </div>
+      <div class="team-member">
+        <img src="https://cdn.discordapp.com/attachments/1342384375102443576/1371853297379577960/IMG_5526.jpg?ex=6824a571&is=682353f1&hm=40c865d3984b52c2d165ba29cd530881ff85b1853775b1b6e034096cd548d471&" alt="Kmy" />
+        <span>Kmy</span>
+        <small>Always sleeping zzz</small>
+      </div>
+    </div>
+  </section>
 
-            // FAQ toggle
-            const questions = document.querySelectorAll('.faq-question');
-            questions.forEach(q => {
-                q.addEventListener('click', () => {
-                    const answer = q.nextElementSibling;
-                    answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
-                });
-            });
-        };
-    </script>
+  <section class="about-section">
+    <h2>Frequently Asked Questions (FAQ)</h2>
+    <div class="faq">
+      <div class="faq-question">🔒 Is my data safe?</div>
+      <div class="faq-answer">Yes, we use secure Spotify authentication and never store personal data without permission.</div>
+
+      <div class="faq-question">🎧 Do I need Spotify Premium?</div>
+      <div class="faq-answer">Nope! Any Spotify account will work.</div>
+
+      <div class="faq-question">🧠 How is this different from Spotify Wrapped?</div>
+      <div class="faq-answer">Spotify Unwrapped updates anytime – not just once a year!</div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2>So, ready to unwrap your music journey?</h2>
+    <a href="#" class="cta-button">Connect with Spotify</a>
+  </section>
+</div>
+
+<footer>
+  <p>Made with ❤️ by Ted & Kmy. Inspired by Spotify©</p>
+</footer>
+      <!-- (about-container, sections, footer, etc.) -->
+
+      <!-- Existing script unchanged -->
+    </main>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      if (body.classList.contains('theme-dark')) {
+        body.classList.replace('theme-dark', 'theme-light');
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.classList.replace('theme-light', 'theme-dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    window.onload = () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.body.className = `theme-${savedTheme}`;
+      } else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.body.className = prefersDark ? 'theme-dark' : 'theme-light';
+      }
+
+      const questions = document.querySelectorAll('.faq-question');
+      questions.forEach(q => {
+        q.addEventListener('click', () => {
+          const answer = q.nextElementSibling;
+          answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        });
+      });
+    };
+  </script>
 </body>
+
 </html>
