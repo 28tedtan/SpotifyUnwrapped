@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Achievements - Spotify Unwrapped</title>
+  <link rel="stylesheet" href="aboutstyles.css" />
+  <style>
+    body {
+      font-family: 'SF Pro Display', sans-serif;
+      background-color: var(--background-primary, #121212);
+      color: var(--text-primary, #FFFFFF);
+      margin: 0;
+      padding: 0;
+    }
+    .navbar {
+      padding: 1.5rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #333;
+      background-color: var(--background-secondary, #1B1B1B);
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
+    .navbar-logo {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      margin-right: 2rem;
+    }
+    .nav-menu {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      flex-wrap: nowrap;
+    }
+    .nav-link {
+      color: var(--text-primary, #FFFFFF);
+      text-decoration: none;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .nav-link.active {
+      color: var(--accent-color, #1DB954);
+    }
+    .achievements-container {
+      padding: 2rem 1.5rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    .achievements-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .badge-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .badge {
+      background: var(--background-tertiary, #2B2B2B);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border-left: 6px solid var(--accent-color, #1DB954);
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease;
+    }
+    .badge:hover {
+      transform: translateY(-5px);
+    }
+    .badge-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .badge-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary, #B3B3B3);
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      border-top: 1px solid #333;
+      background-color: var(--background-secondary, #1B1B1B);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+    <a href="HomePage.html" class="navbar-logo">
+      <div class="spotify-logo">
+        <svg width="132" height="37" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.3013 0.01485C9.05625...Z" fill="currentColor" />
+        </svg>
+        <div class="Unwrapped">Unwrapped</div>
+      </div>
+    </a>
+    <ul class="nav-menu">
+      <li><a href="HomePage.html" class="nav-link">Home</a></li>
+      <li><a href="friends.html" class="nav-link">Friends</a></li>
+      <li><a href="about.html" class="nav-link">About</a></li>
+      <li><a href="settings.html" class="nav-link">Settings</a></li>
+      <li><a href="badges.html" class="nav-link active">Achievements</a></li>
+    </ul>
+  </div>
+
+  <div class="achievements-container">
+    <h1 class="achievements-title">Your Achievements</h1>
+    <div class="badge-list">
+      <div class="badge">
+        <div class="badge-title">🎵 1000+ Songs Played</div>
+        <div class="badge-desc">You’ve listened to over 1000 songs this year!</div>
+      </div>
+      <div class="badge">
+        <div class="badge-title">🌍 Genre Explorer</div>
+        <div class="badge-desc">Listened to 20+ genres in a single week.</div>
+      </div>
+      <div class="badge">
+        <div class="badge-title">🔥 No-Skip Streak</div>
+        <div class="badge-desc">Went 7 days straight without skipping a single track.</div>
+      </div>
+      <div class="badge">
+        <div class="badge-title">💡 Night Owl</div>
+        <div class="badge-desc">Most active between 12am–3am. You vibe late!</div>
+      </div>
+      <div class="badge">
+        <div class="badge-title">👯 Shared Vibes</div>
+        <div class="badge-desc">Connected with 5+ friends who have similar tastes.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made with ❤️ by Ted & Kmy. Inspired by Spotify&copy;</p>
+  </footer>
+</body>
+
+</html>
