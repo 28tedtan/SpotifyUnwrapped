@@ -7,8 +7,20 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
-// Serve static files
+// Set the correct MIME type for CSS files
+app.use((req, res, next) => {
+  if (req.path.endsWith('.css')) {
+    res.type('text/css');
+  }
+  next();
+});
+
+// Serve static files from the current directory
 app.use(express.static(__dirname));
+
+// Serve CSS files with the correct MIME type
+app.use('/css', express.static(join(__dirname)));
+app.use('/styles', express.static(join(__dirname)));
 
 // Serve the main page
 app.get('/', (req, res) => {
