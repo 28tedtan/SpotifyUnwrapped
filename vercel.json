@@ -8,6 +8,22 @@
   ],
   "routes": [
     {
+      "src": "/homestyles.css",
+      "dest": "/homestyles.css"
+    },
+    {
+      "src": "/friendsstyles.css",
+      "dest": "/friendsstyles.css"
+    },
+    {
+      "src": "/aboutstyles.css",
+      "dest": "/aboutstyles.css"
+    },
+    {
+      "src": "/settingsstyles.css",
+      "dest": "/settingsstyles.css"
+    },
+    {
       "src": "/(.*)",
       "dest": "server.js"
     }
