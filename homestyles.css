@@ -567,7 +567,7 @@ body {
 /* Track grid styles */
 .track-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
 }
 
@@ -575,19 +575,17 @@ body {
     background-color: var(--background-elevated);
     border-radius: var(--border-radius);
     overflow: hidden;
-    display: flex;
     transition: transform 0.3s ease;
 }
 
 .track-card:hover {
-    transform: translateY(-2px);
-    cursor: pointer;
+    transform: translateY(-5px);
 }
 
 .track-image {
-    width: 75px;
-    height: 75px;
-    min-width: 75px;
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
 }
 
 .track-image img {
@@ -597,27 +595,23 @@ body {
 }
 
 .track-info {
-    padding: 10px;
-    flex: 1;
+    padding: 15px;
 }
 
 .track-title {
-    margin: 0 0 5px 0;
-    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .track-artist {
-    margin: 0;
-    font-size: 14px;
     color: var(--text-secondary);
+    font-size: 0.9em;
 }
 
 .track-played {
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    font-size: 12px;
     color: var(--text-tertiary);
+    font-size: 0.8em;
+    margin-top: 5px;
 }
 
 /* Artists grid */

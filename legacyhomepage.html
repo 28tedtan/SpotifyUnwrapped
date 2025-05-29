@@ -5,66 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Spotify Unwrapped</title>
   <link rel="stylesheet" href="homestyles.css" />
-  <style>
-    /* Track grid styles */
-    .track-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 15px;
-    }
-
-    .track-card {
-      background-color: var(--background-elevated);
-      border-radius: var(--border-radius);
-      overflow: hidden;
-      transition: transform 0.3s ease;
-    }
-
-    .track-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .track-image {
-      width: 100%;
-      aspect-ratio: 1;
-      overflow: hidden;
-    }
-
-    .track-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .track-info {
-      padding: 12px;
-      text-align: center;
-    }
-
-    .track-title {
-      font-weight: bold;
-      margin-bottom: 5px;
-      font-size: 0.9em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .track-artist {
-      color: var(--text-secondary);
-      font-size: 0.8em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .track-played {
-      color: var(--text-tertiary);
-      font-size: 0.75em;
-      margin-top: 5px;
-    }
-  </style>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="theme-dark">
   <!-- Navbar (matched to friends.html) -->
@@ -156,7 +96,7 @@
 
       <!-- Dashboard -->
       <div id="dashboard" class="dashboard" style="display:none;">
-        <!-- NOW PLAYING -->
+        <!-- 1) NOW PLAYING -->
         <section id="overview" class="dashboard-section">
           <div class="section-header"><h2>Now Playing</h2></div>
           <div id="now-playing" class="now-playing-card">
@@ -180,7 +120,7 @@
           </div>
         </section>
 
-        <!-- TOP TRACKS -->
+        <!-- 2) TOP TRACKS -->
         <section id="top-tracks" class="dashboard-section">
           <div class="section-header">
             <h2>Your Top Tracks</h2>
@@ -198,7 +138,7 @@
           </div>
         </section>
 
-        <!-- GENRES -->
+        <!-- 3) GENRES -->
         <section id="top-genres" class="dashboard-section">
           <div class="section-header"><h2>Your Top Genres</h2></div>
           <div class="genres-container">
@@ -207,13 +147,13 @@
           </div>
         </section>
 
-        <!-- RECENTLY PLAYED -->
+        <!-- 4) RECENTLY PLAYED -->
         <section id="recently-played" class="dashboard-section">
           <div class="section-header"><h2>Recently Played</h2></div>
           <div class="track-grid"></div>
         </section>
 
-        <!-- TOP ARTISTS -->
+        <!-- 5) TOP ARTISTS -->
         <section id="top-artists" class="dashboard-section">
           <div class="section-header">
             <h2>Your Top Artists</h2>
@@ -240,7 +180,7 @@
 
   <!-- Script: Auth + Fetch + Render with split now-playing polling -->
   <script>
-    // ─── CONFIG ──────────────────────────────────────────────────────────────── API KEYS HERE IDC IF YOU STEAL THEM I CAN ALWAYS GET A NEW ONE COS IM TIRED OF DELETING AND CREATING A NEW GITIGNORE WHEN I SYNC CHANGES
+    // ─── CONFIG ────────────────────────────────────────────────────────────────
     const clientId    = '27544f129c784987883db9933a501d42';
     const redirectUri = window.location.origin + window.location.pathname;
     const scopes      = 'user-read-playback-state user-read-recently-played user-top-read';
@@ -261,7 +201,7 @@
       return base64url(hash);
     }
 
-    // ─── AUTH FLOW ───────────────────────────────────────────────────────────── URL ReDIRECT FOR SPOTIFY OAUTH
+    // ─── AUTH FLOW ─────────────────────────────────────────────────────────────
     async function login() {
       const verifier = randomString(64);
       localStorage.setItem('pkce_verifier', verifier);
@@ -300,7 +240,7 @@
       }
     }
 
-    // ─── TOKEN REFRESH ───────────────────────────────────────────────────────── REFRESHING TOKENS
+    // ─── TOKEN REFRESH ─────────────────────────────────────────────────────────
     async function refreshIfNeeded() {
       const expiry = +localStorage.getItem('expiry') || 0;
       if (Date.now() < expiry) return true;
@@ -325,7 +265,7 @@
       }
     }
 
-    // ─── FETCH HELPERS ───────────────────────────────────────────────────────── Ignore
+    // ─── FETCH HELPERS ─────────────────────────────────────────────────────────
     async function fetchUserProfile() {
       if (!await refreshIfNeeded()) return null;
       const token = localStorage.getItem('access_token');
@@ -373,23 +313,25 @@
     // ─── RENDER HELPERS ────────────────────────────────────────────────────────
     function renderTopTracks(data) {
       const container = document.getElementById('top-tracks-container');
-      if (!data?.items?.length) {
-        container.innerHTML = '<div class="no-data">No tracks found</div>';
+      if (!data || !data.items) {
+        container.innerHTML = '<p>No track data available.</p>';
         return;
       }
-      container.innerHTML = data.items.map((track, i) => `
-        <div class="track-card">
+      container.innerHTML = '';
+      data.items.forEach(track => {
+        const url = (track.album.images[0]||{}).url || 'https://via.placeholder.com/100';
+        const card = document.createElement('div');
+        card.className = 'track-card';
+        card.innerHTML = `
           <div class="track-image">
-            <img src="${track.album.images[0]?.url || 'https://via.placeholder.com/200'}" 
-                 alt="${track.name}" />
+            <img src="${url}" alt="${track.name}">
           </div>
           <div class="track-info">
-            <div class="track-title">${track.name}</div>
-            <div class="track-artist">${track.artists.map(a => a.name).join(', ')}</div>
-            <div class="track-played">Played ${track.popularity} times</div>
-          </div>
-        </div>
-      `).join('');
+            <h3 class="track-title">${track.name}</h3>
+            <p class="track-artist">${track.artists.map(a=>a.name).join(', ')}</p>
+          </div>`;
+        container.appendChild(card);
+      });
     }
 
     function renderTopArtists(data) {
@@ -412,81 +354,6 @@
             <p class="artist-genre">${(artist.genres[0]||'Unknown genre')}</p>
           </div>`;
         container.appendChild(card);
-      });
-
-      // Render genres after artists
-      renderGenres(data);
-    }
-
-    function renderGenres(data) {
-      const genres = {};
-      data.items.forEach(artist => {
-        artist.genres.forEach(genre => {
-          genres[genre] = (genres[genre] || 0) + 1;
-        });
-      });
-      const sortedGenres = Object.entries(genres)
-        .sort(([,a], [,b]) => b - a)
-        .slice(0, 10);
-      
-      const list = document.querySelector('.genres-list');
-      list.innerHTML = sortedGenres.map(([genre, count]) => `
-        <div class="genre-item">
-          <div class="genre-color"></div>
-          <div class="genre-name">${genre}</div>
-          <div class="genre-percentage">${count}</div>
-        </div>
-      `).join('');
-
-      const ctx = document.getElementById('genres-chart').getContext('2d');
-      new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: sortedGenres.map(([genre]) => genre),
-          datasets: [{
-            data: sortedGenres.map(([,count]) => count),
-            backgroundColor: [   //Colours for the graphs ykwim add more if you want, use like different shades of green..?
-              '#2E7D32', // Dark Green
-              '#1976D2', // Dark Blue
-              '#7B1FA2', // Dark Purple
-              '#C2185B', // Dark Pink
-              '#D84315', // Dark Orange
-              '#455A64', // Dark Grey Blue
-              '#5D4037', // Dark Brown
-              '#00695C', // Dark Teal
-              '#283593', // Dark Indigo
-              '#37474F'  // Dark Blue Grey
-            ]
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'right',
-              labels: {
-                color: '#FFFFFF',
-                font: {
-                  size: 12
-                }
-              }
-            }
-          }
-        }
-      });
-
-      // Update genre list colors to match chart
-      const genreItems = document.querySelectorAll('.genre-item');
-      const colors = [
-        '#2E7D32', '#1976D2', '#7B1FA2', '#C2185B', '#D84315',
-        '#455A64', '#5D4037', '#00695C', '#283593', '#37474F'
-      ];
-      genreItems.forEach((item, index) => {
-        const colorDiv = item.querySelector('.genre-color');
-        if (colorDiv && colors[index]) {
-          colorDiv.style.backgroundColor = colors[index];
-        }
       });
     }
 
@@ -568,30 +435,25 @@
       updateTrackInfo();
       updateProgress();
 
+      // Initial Top Tracks + Artists
+      renderTopTracks(await fetchTopItems('tracks','medium_term',10));
+      renderTopArtists(await fetchTopItems('artists','medium_term',8));
+
       // Timeframe selectors
       document.querySelectorAll('.timeframe-btn').forEach(btn=>{
         btn.addEventListener('click', async function(){
           const type = this.dataset.type;
-          const timeframe = this.dataset.timeframe;
-          
-          // Update active state
-          document.querySelectorAll(`[data-type="${type}"]`).forEach(b => 
-            b.classList.remove('active'));
+          document.querySelectorAll(`.timeframe-btn[data-type="${type}"]`)
+            .forEach(b=>b.classList.remove('active'));
           this.classList.add('active');
-
-          // Fetch and render data
-          const data = await fetchTopItems(type, timeframe, 20);
-          if (type === 'tracks') {
-            renderTopTracks(data);
-          } else if (type === 'artists') {
-            renderTopArtists(data);
+          const tf = this.dataset.timeframe;
+          if (type==='tracks') {
+            renderTopTracks(await fetchTopItems('tracks',tf,10));
+          } else {
+            renderTopArtists(await fetchTopItems('artists',tf,8));
           }
         });
       });
-
-      // Initial Top Tracks + Artists with higher limits
-      renderTopTracks(await fetchTopItems('tracks', 'medium_term', 20));
-      renderTopArtists(await fetchTopItems('artists', 'medium_term', 20));
 
       // NOW PLAYING POLLS
       setInterval(updateProgress,   500);   // every 0.5 s
