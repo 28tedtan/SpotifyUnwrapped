@@ -87,6 +87,31 @@
       border-top: 1px solid #333;
       background-color: var(--background-secondary, #1B1B1B);
     }
+    #scrollToTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      background-color: var(--accent-color, #1DB954);
+      color: white;
+      border: none;
+      padding: 0.8rem 1rem;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    #scrollToTopBtn.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    #scrollToTopBtn:hover {
+      background-color: #14833b;
+    }
   </style>
 </head>
 
@@ -135,9 +160,25 @@
     </div>
   </div>
 
+  <button id="scrollToTopBtn" title="Back to top">⬆</button>
+
   <footer>
     <p>Made with ❤️ by Ted & Kmy. Inspired by Spotify&copy;</p>
   </footer>
+
+  <script>
+    const scrollBtn = document.getElementById("scrollToTopBtn");
+    window.onscroll = () => {
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollBtn.classList.add("show");
+      } else {
+        scrollBtn.classList.remove("show");
+      }
+    };
+    scrollBtn.onclick = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+  </script>
 </body>
 
 </html>
