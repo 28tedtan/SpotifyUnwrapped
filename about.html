@@ -38,20 +38,26 @@
       margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
+      gap: 1rem;
     }
     .sidebar .nav-menu li {
       text-align: left;
     }
     .sidebar .nav-menu .nav-link {
-      color: white;
+      color: #ffffff;
       text-decoration: none;
       font-weight: bold;
       font-size: 16px;
-      transition: color 0.3s;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      transition: background 0.3s ease, transform 0.3s ease;
     }
     .sidebar .nav-menu .nav-link:hover {
-      color: var(--accent-color);
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: translateX(6px);
+    }
+    .sidebar .nav-menu .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.3);
     }
     .content {
       margin-left: 0;
