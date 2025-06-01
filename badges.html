@@ -15,13 +15,12 @@
       padding: 0;
     }
     .navbar {
-      padding: 1.5rem 1.5rem;
+      padding: 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #333;
       background-color: var(--background-secondary, #1B1B1B);
-      flex-wrap: nowrap;
       overflow-x: auto;
     }
     .navbar-logo {
@@ -36,7 +35,6 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      flex-wrap: nowrap;
     }
     .nav-link {
       color: var(--text-primary, #FFFFFF);
@@ -56,6 +54,23 @@
       font-size: 2.5rem;
       margin-bottom: 1rem;
     }
+    .filter-bar {
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+    }
+    .filter-bar button {
+      background: #1DB954;
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .filter-bar button.active {
+      background: #14833b;
+    }
     .badge-list {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -68,9 +83,22 @@
       border-left: 6px solid var(--accent-color, #1DB954);
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
       transition: transform 0.2s ease;
+      position: relative;
     }
     .badge:hover {
-      transform: translateY(-5px);
+      transform: scale(1.02);
+    }
+    .badge.locked {
+      opacity: 0.4;
+      border-left-color: #888;
+    }
+    .badge.locked::after {
+      content: '🔒 Locked';
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.9rem;
+      color: #ff6666;
     }
     .badge-title {
       font-size: 1.2rem;
@@ -80,6 +108,19 @@
     .badge-desc {
       font-size: 0.95rem;
       color: var(--text-secondary, #B3B3B3);
+    }
+    .progress-bar {
+      margin-top: 0.8rem;
+      background: #333;
+      border-radius: 5px;
+      overflow: hidden;
+      height: 8px;
+    }
+    .progress-bar span {
+      display: block;
+      height: 100%;
+      background: #1DB954;
+      width: 60%;
     }
     footer {
       text-align: center;
@@ -136,26 +177,41 @@
 
   <div class="achievements-container">
     <h1 class="achievements-title">Your Achievements</h1>
-    <div class="badge-list">
+    <div class="filter-bar">
+      <button onclick="filterBadges('all')" class="active">All</button>
+      <button onclick="filterBadges('unlocked')">Unlocked</button>
+      <button onclick="filterBadges('locked')">Locked</button>
+    </div>
+    <div class="badge-list" id="badgeList">
       <div class="badge">
         <div class="badge-title">🎵 1000+ Songs Played</div>
         <div class="badge-desc">You’ve listened to over 1000 songs this year!</div>
+        <div class="progress-bar"><span style="width: 100%"></span></div>
       </div>
       <div class="badge">
         <div class="badge-title">🌍 Genre Explorer</div>
         <div class="badge-desc">Listened to 20+ genres in a single week.</div>
+        <div class="progress-bar"><span style="width: 100%"></span></div>
       </div>
       <div class="badge">
         <div class="badge-title">🔥 No-Skip Streak</div>
-        <div class="badge-desc">Went 7 days straight without skipping a single track.</div>
+        <div class="badge-desc">7 days straight without skipping a single track.</div>
+        <div class="progress-bar"><span style="width: 100%"></span></div>
       </div>
-      <div class="badge">
+      <div class="badge locked">
         <div class="badge-title">💡 Night Owl</div>
         <div class="badge-desc">Most active between 12am–3am. You vibe late!</div>
+        <div class="progress-bar"><span style="width: 30%"></span></div>
       </div>
       <div class="badge">
         <div class="badge-title">👯 Shared Vibes</div>
-        <div class="badge-desc">Connected with 5+ friends who have similar tastes.</div>
+        <div class="badge-desc">Connected with 5+ friends with similar tastes.</div>
+        <div class="progress-bar"><span style="width: 100%"></span></div>
+      </div>
+      <div class="badge locked">
+        <div class="badge-title">🧠 Playlist Pro</div>
+        <div class="badge-desc">Created 10+ custom playlists in one month.</div>
+        <div class="progress-bar"><span style="width: 50%"></span></div>
       </div>
     </div>
   </div>
@@ -178,9 +234,22 @@
     scrollBtn.onclick = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
+
+    function filterBadges(filter) {
+      const badges = document.querySelectorAll('.badge');
+      document.querySelectorAll('.filter-bar button').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      badges.forEach(badge => {
+        if (filter === 'all') {
+          badge.style.display = 'block';
+        } else if (filter === 'locked') {
+          badge.style.display = badge.classList.contains('locked') ? 'block' : 'none';
+        } else {
+          badge.style.display = badge.classList.contains('locked') ? 'none' : 'block';
+        }
+      });
+    }
   </script>
 </body>
 
 </html>
-
-
