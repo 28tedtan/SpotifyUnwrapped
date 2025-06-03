@@ -15,12 +15,13 @@
       padding: 0;
     }
     .navbar {
-      padding: 1.5rem;
+      padding: 1.5rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #333;
       background-color: var(--background-secondary, #1B1B1B);
+      flex-wrap: wrap;
       overflow-x: auto;
     }
     .navbar-logo {
@@ -35,6 +36,7 @@
       list-style: none;
       margin: 0;
       padding: 0;
+      flex-wrap: wrap;
     }
     .nav-link {
       color: var(--text-primary, #FFFFFF);
@@ -44,6 +46,8 @@
     }
     .nav-link.active {
       color: var(--accent-color, #1DB954);
+      border-bottom: 2px solid var(--accent-color, #1DB954);
+      padding-bottom: 2px;
     }
     .achievements-container {
       padding: 2rem 1.5rem;
@@ -53,23 +57,6 @@
     .achievements-title {
       font-size: 2.5rem;
       margin-bottom: 1rem;
-    }
-    .filter-bar {
-      margin-bottom: 1.5rem;
-      display: flex;
-      gap: 1rem;
-    }
-    .filter-bar button {
-      background: #1DB954;
-      border: none;
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .filter-bar button.active {
-      background: #14833b;
     }
     .badge-list {
       display: grid;
@@ -85,20 +72,16 @@
       transition: transform 0.2s ease;
       position: relative;
     }
-    .badge:hover {
-      transform: scale(1.02);
-    }
     .badge.locked {
-      opacity: 0.4;
-      border-left-color: #888;
+      opacity: 0.5;
+      filter: grayscale(1);
     }
-    .badge.locked::after {
-      content: '🔒 Locked';
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 0.9rem;
-      color: #ff6666;
+    .badge.unlocked {
+      opacity: 1;
+      filter: none;
+    }
+    .badge:hover {
+      transform: translateY(-5px);
     }
     .badge-title {
       font-size: 1.2rem;
@@ -109,24 +92,15 @@
       font-size: 0.95rem;
       color: var(--text-secondary, #B3B3B3);
     }
-    .progress-bar {
-      margin-top: 0.8rem;
-      background: #333;
-      border-radius: 5px;
-      overflow: hidden;
-      height: 8px;
-    }
-    .progress-bar span {
-      display: block;
-      height: 100%;
-      background: #1DB954;
-      width: 60%;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      border-top: 1px solid #333;
-      background-color: var(--background-secondary, #1B1B1B);
+    .badge button {
+      margin-top: 0.5rem;
+      background-color: var(--accent-color, #1DB954);
+      color: #000;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
     }
     #scrollToTopBtn {
       position: fixed;
@@ -153,10 +127,22 @@
     #scrollToTopBtn:hover {
       background-color: #14833b;
     }
+    .confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      display: none;
+    }
   </style>
 </head>
 
 <body>
+  <canvas class="confetti"></canvas>
+
   <div class="navbar">
     <a href="HomePage.html" class="navbar-logo">
       <div class="spotify-logo">
@@ -177,41 +163,30 @@
 
   <div class="achievements-container">
     <h1 class="achievements-title">Your Achievements</h1>
-    <div class="filter-bar">
-      <button onclick="filterBadges('all')" class="active">All</button>
-      <button onclick="filterBadges('unlocked')">Unlocked</button>
-      <button onclick="filterBadges('locked')">Locked</button>
-    </div>
-    <div class="badge-list" id="badgeList">
-      <div class="badge">
+    <div class="badge-list">
+      <div class="badge unlocked">
         <div class="badge-title">🎵 1000+ Songs Played</div>
         <div class="badge-desc">You’ve listened to over 1000 songs this year!</div>
-        <div class="progress-bar"><span style="width: 100%"></span></div>
       </div>
-      <div class="badge">
+      <div class="badge locked" id="genreBadge">
         <div class="badge-title">🌍 Genre Explorer</div>
         <div class="badge-desc">Listened to 20+ genres in a single week.</div>
-        <div class="progress-bar"><span style="width: 100%"></span></div>
+        <button onclick="unlockBadge('genreBadge')">Claim</button>
       </div>
-      <div class="badge">
-        <div class="badge-title">🔥 No-Skip Streak</div>
-        <div class="badge-desc">7 days straight without skipping a single track.</div>
-        <div class="progress-bar"><span style="width: 100%"></span></div>
-      </div>
-      <div class="badge locked">
+      <div class="badge locked" id="nightOwlBadge">
         <div class="badge-title">💡 Night Owl</div>
         <div class="badge-desc">Most active between 12am–3am. You vibe late!</div>
-        <div class="progress-bar"><span style="width: 30%"></span></div>
+        <button onclick="unlockBadge('nightOwlBadge')">Claim</button>
       </div>
-      <div class="badge">
+      <div class="badge locked" id="noSkipStreak">
+        <div class="badge-title">🔥 No-Skip Streak</div>
+        <div class="badge-desc">Went 7 days straight without skipping a single track.</div>
+        <button onclick="unlockBadge('noSkipStreak')">Claim</button>
+      </div>
+      <div class="badge locked" id="sharedVibes">
         <div class="badge-title">👯 Shared Vibes</div>
-        <div class="badge-desc">Connected with 5+ friends with similar tastes.</div>
-        <div class="progress-bar"><span style="width: 100%"></span></div>
-      </div>
-      <div class="badge locked">
-        <div class="badge-title">🧠 Playlist Pro</div>
-        <div class="badge-desc">Created 10+ custom playlists in one month.</div>
-        <div class="progress-bar"><span style="width: 50%"></span></div>
+        <div class="badge-desc">Connected with 5+ friends who have similar tastes.</div>
+        <button onclick="unlockBadge('sharedVibes')">Claim</button>
       </div>
     </div>
   </div>
@@ -235,19 +210,62 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    function filterBadges(filter) {
-      const badges = document.querySelectorAll('.badge');
-      document.querySelectorAll('.filter-bar button').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
-      badges.forEach(badge => {
-        if (filter === 'all') {
-          badge.style.display = 'block';
-        } else if (filter === 'locked') {
-          badge.style.display = badge.classList.contains('locked') ? 'block' : 'none';
-        } else {
-          badge.style.display = badge.classList.contains('locked') ? 'none' : 'block';
+    const canvas = document.querySelector(".confetti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confetti = Array.from({ length: 100 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * -canvas.height,
+      r: Math.random() * 6 + 4,
+      d: Math.random() * 100,
+      color: `hsl(${Math.random() * 360}, 100%, 60%)`,
+      tilt: Math.floor(Math.random() * 10) - 10
+    }));
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach(c => {
+        ctx.beginPath();
+        ctx.lineWidth = c.r / 2;
+        ctx.strokeStyle = c.color;
+        ctx.moveTo(c.x + c.tilt, c.y);
+        ctx.lineTo(c.x, c.y + c.tilt + c.r);
+        ctx.stroke();
+      });
+      updateConfetti();
+    }
+
+    function updateConfetti() {
+      confetti.forEach(c => {
+        c.y += Math.cos(c.d) + 1 + c.r / 2;
+        c.x += Math.sin(c.d);
+        if (c.y > canvas.height) {
+          c.y = -10;
+          c.x = Math.random() * canvas.width;
         }
       });
+    }
+
+    function playConfetti() {
+      canvas.style.display = 'block';
+      let frame = 0;
+      const animate = () => {
+        drawConfetti();
+        frame++;
+        if (frame < 120) requestAnimationFrame(animate);
+        else canvas.style.display = 'none';
+      };
+      animate();
+    }
+
+    function unlockBadge(id) {
+      const badge = document.getElementById(id);
+      badge.classList.remove('locked');
+      badge.classList.add('unlocked');
+      badge.querySelector('button').remove();
+      playConfetti();
     }
   </script>
 </body>
