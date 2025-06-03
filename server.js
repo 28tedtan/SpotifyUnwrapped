@@ -1,54 +1,44 @@
-import express from 'express';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
+const express = require('express');
+const path = require('path');
 const app = express();
+const port = process.env.PORT || 45553;
 
 // Serve static files from the current directory
-app.use(express.static(__dirname));
+app.use(express.static(__dirname, {
+    setHeaders: (res, path) => {
+        if (path.endsWith('.css')) {
+            res.setHeader('Content-Type', 'text/css');
+        }
+    }
+}));
 
-// Explicitly serve CSS files
-app.get('/*.css', (req, res, next) => {
-  res.type('text/css');
-  next();
-});
-
-// Serve the main page
+// Routes
 app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, 'HomePage.html'));
+    res.sendFile(path.join(__dirname, 'HomePage.html'));
 });
 
-// Serve other HTML pages
-app.get('/dj-player', (req, res) => {
-  res.sendFile(join(__dirname, 'dj-player.html'));
-});
-
-app.get('/about', (req, res) => {
-  res.sendFile(join(__dirname, 'about.html'));
-});
-
-app.get('/settings', (req, res) => {
-  res.sendFile(join(__dirname, 'settings.html'));
+app.get('/trending', (req, res) => {
+    res.sendFile(path.join(__dirname, 'trending.html'));
 });
 
 app.get('/friends', (req, res) => {
-  res.sendFile(join(__dirname, 'friends.html'));
+    res.sendFile(path.join(__dirname, 'friends.html'));
 });
 
-app.get('/badges', (req, res) => {
-  res.sendFile(join(__dirname, 'badges.html'));
+app.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname, 'about.html'));
 });
 
-// Handle 404 errors - this should be the last route for any unused page
+app.get('/settings', (req, res) => {
+    res.sendFile(path.join(__dirname, 'settings.html'));
+});
+
+// Error handling for 404
 app.use((req, res) => {
-  res.status(404).sendFile(join(__dirname, '404.html'));
+    res.status(404).send('Page not found');
 });
 
-// Start the server using port 3000 or wtv 3000 is the most generic one lmao
-const port = process.env.PORT || 3000;
+// Start server
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 }); 

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Trending - Spotify Unwrapped</title>
+    <link rel="stylesheet" href="/homestyles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/theme.js"></script>
+    <style>
+        /* Ensure base styles are applied immediately */
+        :root {
+            --background-primary: #121212;
+            --background-secondary: #1B1B1B;
+            --background-tertiary: #2B2B2B;
+            --background-elevated: #333333;
+            --accent-color: #1DB954;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+        }
+
+        body {
+            background-color: var(--background-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .spotify-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .spotify-logo svg {
+            width: 132px;
+            height: 37px;
+            color: var(--text-primary);
+        }
+        .Unwrapped {
+            color: var(--accent-color);
+            font-size: 24px;
+            font-weight: 800;
+            font-style: italic;
+            margin-left: 4px;
+            font-family: 'SF Pro Display', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        .navbar-logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="HomePage.html" class="navbar-logo">
+                <div class="spotify-logo">
+                    <svg width="132" height="37" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M19.3013 0.01485C9.05625 -0.390621 0.421794 7.55691 0.014902 17.7661C-0.39199 27.9769 7.58339 36.5812 17.8299 36.9852C28.0749 37.3906 36.7094 29.4431 37.1163 19.2339C37.5232 9.02463 29.5463 0.418779 19.3013 0.01485ZM27.1389 27.1166C26.9933 27.371 26.7523 27.5573 26.4689 27.6348C26.1855 27.7123 25.8829 27.6745 25.6274 27.5298C23.173 26.1381 20.4754 25.2241 17.6783 24.8364C14.8827 24.4408 12.037 24.5784 9.29296 25.2419C9.01291 25.2961 8.7227 25.2406 8.4826 25.0871C8.2425 24.9336 8.07098 24.6938 8.00367 24.4176C7.93636 24.1413 7.97843 23.8499 8.12115 23.6037C8.26386 23.3576 8.49625 23.1757 8.77003 23.0959C11.7869 22.3651 14.8889 22.2155 17.9878 22.6488C21.0866 23.0835 24.0261 24.0795 26.7243 25.6088C26.8509 25.6807 26.962 25.7767 27.0514 25.8914C27.1407 26.0061 27.2065 26.1372 27.245 26.2772C27.2835 26.4172 27.294 26.5634 27.2758 26.7074C27.2576 26.8515 27.2111 26.9905 27.1389 27.1166ZM29.5787 22.2602C29.4889 22.4262 29.3671 22.5729 29.2203 22.6919C29.0735 22.8109 28.9046 22.8999 28.7232 22.9537C28.5418 23.0076 28.3516 23.0252 28.1634 23.0057C27.9751 22.9862 27.7926 22.9298 27.6263 22.8399C24.7521 21.2915 21.6229 20.2681 18.3869 19.8182C15.1517 19.3618 11.8607 19.4861 8.66947 20.1851C8.48456 20.226 8.29338 20.23 8.10689 20.1971C7.9204 20.1641 7.74228 20.0948 7.58273 19.9931C7.42318 19.8914 7.28535 19.7594 7.17714 19.6045C7.06894 19.4496 6.99248 19.2749 6.95217 19.0905C6.91117 18.9062 6.90709 18.7157 6.94014 18.5299C6.9732 18.344 7.04275 18.1665 7.1448 18.0075C7.24686 17.8485 7.37941 17.7112 7.53485 17.6034C7.69029 17.4955 7.86557 17.4193 8.05062 17.3792C11.5765 16.6054 15.2132 16.4686 18.7876 16.9752C22.3638 17.4701 25.8217 18.6006 28.997 20.3131C29.6963 20.6908 29.9562 21.5618 29.5787 22.2602ZM32.2831 16.7856C32.0658 17.2013 31.6919 17.514 31.2434 17.655C30.7949 17.7961 30.3086 17.754 29.8913 17.538C26.5443 15.8039 22.9245 14.6527 19.1883 14.1339C15.4532 13.606 11.655 13.7181 7.9578 14.4653C7.49959 14.5521 7.02552 14.4555 6.6383 14.1964C6.25108 13.9373 5.98191 13.5366 5.88911 13.0812C5.79631 12.6257 5.88736 12.1521 6.14252 11.763C6.39769 11.374 6.79642 11.1008 7.25231 11.0026C11.3441 10.175 15.5477 10.0499 19.6818 10.6326C23.8172 11.2078 27.8235 12.4827 31.5281 14.4021C32.396 14.8523 32.7349 15.9192 32.2831 16.7856Z"
+                            fill="currentColor" />
+                    </svg>
+                    <div class="Unwrapped">Unwrapped</div>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="HomePage.html">Home</a></li>
+                <li><a href="friends.html">Friends</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="trending.html" class="active">Trending</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h2>Trending Categories</h2>
+                <ul class="sidebar-links">
+                    <li><a href="#global-trends">Global Trends</a></li>
+                    <li><a href="#rising-artists">Rising Artists</a></li>
+                    <li><a href="#viral-tracks">Viral Tracks</a></li>
+                    <li><a href="#genre-trends">Genre Trends</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <section id="global-trends" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Global Trends</h2>
+                    <div class="timeframe-selector">
+                        <button class="timeframe-btn active" data-timeframe="today">Now</button>
+                    </div>
+                </div>
+                <div class="track-grid" style="grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/track/5dLz8bhINeCWgppiUIcafp?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/track/6rqhFgbbKwnb9MLmUQDhG6?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/track/0V3wPSX9ygBnCm8psDIegu?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/track/5QO79kh1waicV47BqGRL3g?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/track/2LBqCSwhJGcFQeTHMVGwy3?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/track/3xKsf9qdS1CyvXSMEid6g8?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/track/4iV5W9uYEdYUVa79Axb7Rh?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/track/7qEHsqek33rTcFNT9PFqLf?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </section>
+
+            <section id="rising-artists" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Rising Artists</h2>
+                </div>
+                <div class="artists-grid" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/artist/35l9BRT7MXmM8bv2WDQiyB?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/artist/2Waw2sSbqvAwK8NwACNjVo?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/artist/2h93pZq0e7k5yf4dywlkpM?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </section>
+
+            <section id="viral-tracks" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Viral Tracks</h2>
+                </div>
+                <div class="track-grid" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/track/0V3wPSX9ygBnCm8psDIegu?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/track/5QO79kh1waicV47BqGRL3g?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="track-card" style="background: var(--background-elevated); border-radius: 12px; overflow: hidden;">
+                        <iframe style="border-radius:12px" 
+                                src="https://open.spotify.com/embed/track/2LBqCSwhJGcFQeTHMVGwy3?utm_source=generator" 
+                                width="100%" 
+                                height="152" 
+                                frameBorder="0" 
+                                allowfullscreen="" 
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                                loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </section>
+
+            <section id="genre-trends" class="dashboard-section">
+                <div class="section-header">
+                    <h2>Genre Trends</h2>
+                </div>
+                <div class="genres-container">
+                    <div class="genres-chart">
+                        <canvas id="trending-genres-chart"></canvas>
+                    </div>
+                    <div class="genres-list">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <p>Made with love by Ted & Kmy. Inspired by Spotify&copy;</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize theme
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.body.className = `theme-${savedTheme}`;
+
+            // Initialize timeframe buttons
+            const timeframeButtons = document.querySelectorAll('.timeframe-btn');
+            timeframeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const parent = button.parentElement;
+                    parent.querySelectorAll('.timeframe-btn').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                });
+            });
+
+            // Initialize genres chart
+            const ctx = document.getElementById('trending-genres-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pop', 'Hip Hop', 'Rock', 'Electronic', 'R&B'],
+                    datasets: [{
+                        data: [30, 25, 20, 15, 10],
+                        backgroundColor: [
+                            '#1DB954',
+                            '#1E88E5',
+                            '#E53935',
+                            '#8E24AA',
+                            '#FB8C00'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                color: '#FFFFFF'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html> 
