@@ -143,10 +143,8 @@ body {
 .main-container {
     display: flex;
     flex: 1;
-    margin-top: 90px; /* Match navbar height */
-    margin-bottom: 5px;
-    min-height: calc(100vh - 90px);
-    position: relative;
+    margin-top: -15px; /* Exactly 5px space below navbar */
+    margin-bottom: 5px; /* Exactly 5px space above footer */
 }
 
 /* Sidebar styles */
@@ -159,11 +157,6 @@ body {
     padding: 2px;
     margin: 2px;
     transition: background-color var(--transition-speed) ease;
-    position: fixed;
-    top: 90px;
-    left: 0;
-    bottom: 0;
-    overflow-y: auto;
 }
 
 .sidebar-section {
@@ -304,10 +297,6 @@ body {
     flex: 1;
     padding: 20px;
     overflow-y: auto;
-    background-color: var(--background-primary);
-    color: var(--text-primary);
-    min-height: calc(100vh - 90px);
-    margin-left: 250px;
 }
 
 /* Login section */
@@ -578,9 +567,8 @@ body {
 /* Track grid styles */
 .track-grid {
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
-    margin-top: 20px;
-    width: 100%;
 }
 
 .track-card {
@@ -588,11 +576,10 @@ body {
     border-radius: var(--border-radius);
     overflow: hidden;
     transition: transform 0.3s ease;
-    width: 100%;
 }
 
 .track-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-5px);
 }
 
 .track-image {
