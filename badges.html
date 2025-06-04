@@ -57,6 +57,9 @@
     .achievements-title {
       font-size: 2.5rem;
       margin-bottom: 1rem;
+      background: linear-gradient(90deg, #1DB954, #1ED760, #3DDC84);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     .badge-list {
       display: grid;
@@ -64,11 +67,11 @@
       gap: 1.5rem;
     }
     .badge {
-      background: var(--background-tertiary, #2B2B2B);
+      background: linear-gradient(135deg, #2B2B2B, #383838);
       padding: 1.5rem;
       border-radius: 12px;
       border-left: 6px solid var(--accent-color, #1DB954);
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
       transition: transform 0.2s ease;
       position: relative;
     }
@@ -79,6 +82,8 @@
     .badge.unlocked {
       opacity: 1;
       filter: none;
+      background: linear-gradient(135deg, #1DB954, #1ED760);
+      color: #000;
     }
     .badge:hover {
       transform: translateY(-5px);
@@ -92,15 +97,36 @@
       font-size: 0.95rem;
       color: var(--text-secondary, #B3B3B3);
     }
+    .badge.unlocked .badge-desc {
+      color: #000;
+    }
     .badge button {
       margin-top: 0.5rem;
-      background-color: var(--accent-color, #1DB954);
+      background-color: #FFD700;
       color: #000;
       border: none;
       padding: 0.4rem 0.8rem;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
+    }
+    .badge-progress {
+      margin-top: 10px;
+      height: 10px;
+      background: #333;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .badge-progress-bar {
+      height: 100%;
+      background: linear-gradient(to right, #ff6a00, #ee0979);
+      transition: width 0.5s ease;
+    }
+    .badge-footer {
+      font-size: 0.8rem;
+      text-align: right;
+      color: #999;
+      margin-top: 8px;
     }
     #scrollToTopBtn {
       position: fixed;
@@ -142,7 +168,6 @@
 
 <body>
   <canvas class="confetti"></canvas>
-
   <div class="navbar">
     <a href="HomePage.html" class="navbar-logo">
       <div class="spotify-logo">
@@ -167,36 +192,17 @@
       <div class="badge unlocked">
         <div class="badge-title">🎵 1000+ Songs Played</div>
         <div class="badge-desc">You’ve listened to over 1000 songs this year!</div>
+        <div class="badge-footer">Unlocked</div>
       </div>
       <div class="badge locked" id="genreBadge">
         <div class="badge-title">🌍 Genre Explorer</div>
-        <div class="badge-desc">Listened to 20+ genres in a single week.</div>
+        <div class="badge-desc">Listened to 20+ genres in a week.</div>
+        <div class="badge-progress"><div class="badge-progress-bar" style="width: 60%;"></div></div>
         <button onclick="unlockBadge('genreBadge')">Claim</button>
-      </div>
-      <div class="badge locked" id="nightOwlBadge">
-        <div class="badge-title">💡 Night Owl</div>
-        <div class="badge-desc">Most active between 12am–3am. You vibe late!</div>
-        <button onclick="unlockBadge('nightOwlBadge')">Claim</button>
-      </div>
-      <div class="badge locked" id="noSkipStreak">
-        <div class="badge-title">🔥 No-Skip Streak</div>
-        <div class="badge-desc">Went 7 days straight without skipping a single track.</div>
-        <button onclick="unlockBadge('noSkipStreak')">Claim</button>
-      </div>
-      <div class="badge locked" id="sharedVibes">
-        <div class="badge-title">👯 Shared Vibes</div>
-        <div class="badge-desc">Connected with 5+ friends who have similar tastes.</div>
-        <button onclick="unlockBadge('sharedVibes')">Claim</button>
       </div>
     </div>
   </div>
-
   <button id="scrollToTopBtn" title="Back to top">⬆</button>
-
-  <footer>
-    <p>Made with ❤️ by Ted & Kmy. Inspired by Spotify&copy;</p>
-  </footer>
-
   <script>
     const scrollBtn = document.getElementById("scrollToTopBtn");
     window.onscroll = () => {
@@ -214,7 +220,6 @@
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
     const confetti = Array.from({ length: 100 }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * -canvas.height,
@@ -223,7 +228,6 @@
       color: `hsl(${Math.random() * 360}, 100%, 60%)`,
       tilt: Math.floor(Math.random() * 10) - 10
     }));
-
     function drawConfetti() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       confetti.forEach(c => {
@@ -236,7 +240,6 @@
       });
       updateConfetti();
     }
-
     function updateConfetti() {
       confetti.forEach(c => {
         c.y += Math.cos(c.d) + 1 + c.r / 2;
@@ -247,7 +250,6 @@
         }
       });
     }
-
     function playConfetti() {
       canvas.style.display = 'block';
       let frame = 0;
@@ -259,12 +261,18 @@
       };
       animate();
     }
-
     function unlockBadge(id) {
       const badge = document.getElementById(id);
       badge.classList.remove('locked');
       badge.classList.add('unlocked');
-      badge.querySelector('button').remove();
+      const progress = badge.querySelector('.badge-progress');
+      if (progress) progress.remove();
+      const btn = badge.querySelector('button');
+      if (btn) btn.remove();
+      const footer = document.createElement('div');
+      footer.className = 'badge-footer';
+      footer.textContent = 'Unlocked';
+      badge.appendChild(footer);
       playConfetti();
     }
   </script>
