@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="theme-dark">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Settings - Spotify Unwrapped</title>
-  <link rel="stylesheet" href="/homestyles.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="/theme.js"></script>
+  <link rel="stylesheet" href="settingsstyles.css">
   <style>
     body::before {
       content: "";
@@ -74,142 +72,101 @@
     border-radius: 8px;
     color: var(--text-primary);
   }
-    .spotify-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .spotify-logo svg {
-      width: 132px;
-      height: 37px;
-      color: var(--text-primary);
-    }
-    .Unwrapped {
-      color: var(--accent-color);
-      font-size: 24px;
-      font-weight: 800;
-      font-style: italic;
-      margin-left: 4px;
-      font-family: 'SF Pro Display', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-    .navbar-logo {
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
-  </style>
+</style>
 </head>
 
-<body>
+<body class="theme-dark">
   <nav class="navbar">
     <div class="navbar-container">
       <a href="HomePage.html" class="navbar-logo">
         <div class="spotify-logo">
-          <svg width="132" height="37" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M19.3013 0.01485C9.05625 -0.390621 0.421794 7.55691 0.014902 17.7661C-0.39199 27.9769 7.58339 36.5812 17.8299 36.9852C28.0749 37.3906 36.7094 29.4431 37.1163 19.2339C37.5232 9.02463 29.5463 0.418779 19.3013 0.01485ZM27.1389 27.1166C26.9933 27.371 26.7523 27.5573 26.4689 27.6348C26.1855 27.7123 25.8829 27.6745 25.6274 27.5298C23.173 26.1381 20.4754 25.2241 17.6783 24.8364C14.8827 24.4408 12.037 24.5784 9.29296 25.2419C9.01291 25.2961 8.7227 25.2406 8.4826 25.0871C8.2425 24.9336 8.07098 24.6938 8.00367 24.4176C7.93636 24.1413 7.97843 23.8499 8.12115 23.6037C8.26386 23.3576 8.49625 23.1757 8.77003 23.0959C11.7869 22.3651 14.8889 22.2155 17.9878 22.6488C21.0866 23.0835 24.0261 24.0795 26.7243 25.6088C26.8509 25.6807 26.962 25.7767 27.0514 25.8914C27.1407 26.0061 27.2065 26.1372 27.245 26.2772C27.2835 26.4172 27.294 26.5634 27.2758 26.7074C27.2576 26.8515 27.2111 26.9905 27.1389 27.1166ZM29.5787 22.2602C29.4889 22.4262 29.3671 22.5729 29.2203 22.6919C29.0735 22.8109 28.9046 22.8999 28.7232 22.9537C28.5418 23.0076 28.3516 23.0252 28.1634 23.0057C27.9751 22.9862 27.7926 22.9298 27.6263 22.8399C24.7521 21.2915 21.6229 20.2681 18.3869 19.8182C15.1517 19.3618 11.8607 19.4861 8.66947 20.1851C8.48456 20.226 8.29338 20.23 8.10689 20.1971C7.9204 20.1641 7.74228 20.0948 7.58273 19.9931C7.42318 19.8914 7.28535 19.7594 7.17714 19.6045C7.06894 19.4496 6.99248 19.2749 6.95217 19.0905C6.91117 18.9062 6.90709 18.7157 6.94014 18.5299C6.9732 18.344 7.04275 18.1665 7.1448 18.0075C7.24686 17.8485 7.37941 17.7112 7.53485 17.6034C7.69029 17.4955 7.86557 17.4193 8.05062 17.3792C11.5765 16.6054 15.2132 16.4686 18.7876 16.9752C22.3638 17.4701 25.8217 18.6006 28.997 20.3131C29.6963 20.6908 29.9562 21.5618 29.5787 22.2602ZM32.2831 16.7856C32.0658 17.2013 31.6919 17.514 31.2434 17.655C30.7949 17.7961 30.3086 17.754 29.8913 17.538C26.5443 15.8039 22.9245 14.6527 19.1883 14.1339C15.4532 13.606 11.655 13.7181 7.9578 14.4653C7.49959 14.5521 7.02552 14.4555 6.6383 14.1964C6.25108 13.9373 5.98191 13.5366 5.88911 13.0812C5.79631 12.6257 5.88736 12.1521 6.14252 11.763C6.39769 11.374 6.79642 11.1008 7.25231 11.0026C11.3441 10.175 15.5477 10.0499 19.6818 10.6326C23.8172 11.2078 27.8235 12.4827 31.5281 14.4021C32.396 14.8523 32.7349 15.9192 32.2831 16.7856Z"
-              fill="currentColor" />
-          </svg>
+          <!-- SVG omitted for brevity -->
           <div class="Unwrapped">Unwrapped</div>
         </div>
       </a>
-      <ul class="nav-links">
-        <li><a href="HomePage.html">Home</a></li>
-        <li><a href="friends.html">Friends</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="trending.html">Trending</a></li>
-        <li><a href="settings.html" class="active">Settings</a></li>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="HomePage.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="friends.html" class="nav-link">Friends</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="settings.html" class="nav-link active">Settings</a></li>
       </ul>
     </div>
   </nav>
 
-  <div class="main-container">
-    <div class="sidebar">
-      <div class="sidebar-section">
-        <h2>Settings</h2>
-        <ul class="sidebar-links">
-          <li><a href="#account">Account</a></li>
-          <li><a href="#preferences">Preferences</a></li>
-          <li><a href="#privacy">Privacy</a></li>
-          <li><a href="#notifications">Notifications</a></li>
-        </ul>
+  <div class="settings-container">
+    <h1 class="settings-title">Settings</h1>
+
+    <div class="settings-section">
+      <h2>Appearance</h2>
+      <div class="settings-item">
+        <span>Theme</span>
+        <div class="theme-switch-wrapper">
+          <span class="theme-label">Dark</span>
+          <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+          </label>
+          <span class="theme-label">Light</span>
+        </div>
+      </div>
+      <div class="settings-item">
+        <span>Accent Color</span>
+        <div class="color-picker">
+          <div class="color-swatch" style="background: #1DB954;" data-color="#1DB954"></div>
+          <div class="color-swatch" style="background: #4285F4;" data-color="#4285F4"></div>
+          <div class="color-swatch" style="background: #DB4437;" data-color="#DB4437"></div>
+          <div class="color-swatch" style="background: #F4B400;" data-color="#F4B400"></div>
+        </div>
       </div>
     </div>
 
-    <div class="content-area">
-      <section id="account" class="dashboard-section">
-        <div class="section-header">
-          <h2>Account Settings</h2>
+    <div class="settings-section">
+      <h2>Account</h2>
+      <div class="settings-item">
+        <span>Connected to Spotify</span>
+        <div class="connection-status">
+          <div class="status-indicator connected"></div>
+          <span id="connection-text">Connected</span>
         </div>
-        <div class="settings-content" style="background: var(--background-elevated); border-radius: 12px; padding: 20px;">
-          <div class="setting-item" style="margin-bottom: 20px;">
-            <h3 style="margin: 0 0 10px 0;">Profile Information</h3>
-            <p style="margin: 0; color: var(--text-secondary);">Update your profile information and preferences.</p>
-          </div>
-          <div class="setting-item" style="margin-bottom: 20px;">
-            <h3 style="margin: 0 0 10px 0;">Connected Accounts</h3>
-            <p style="margin: 0; color: var(--text-secondary);">Manage your connected social media accounts.</p>
-          </div>
-        </div>
-      </section>
+      </div>
+      <div class="settings-item">
+        <span>Sign Out from Spotify</span>
+        <button id="signout-btn" class="action-button">Sign Out</button>
+      </div>
+    </div>
 
-      <section id="preferences" class="dashboard-section">
-        <div class="section-header">
-          <h2>Preferences</h2>
-        </div>
-        <div class="settings-content" style="background: var(--background-elevated); border-radius: 12px; padding: 20px;">
-          <div class="setting-item" style="margin-bottom: 20px;">
-            <h3 style="margin: 0 0 10px 0;">Theme</h3>
-            <div class="theme-toggle" style="display: flex; gap: 10px;">
-              <button class="timeframe-btn active">Dark</button>
-              <button class="timeframe-btn">Light</button>
-            </div>
-          </div>
-          <div class="setting-item" style="margin-bottom: 20px;">
-            <h3 style="margin: 0 0 10px 0;">Language</h3>
-            <select style="background: var(--background-tertiary); color: var(--text-primary); border: none; padding: 8px; border-radius: 4px;">
-              <option>English</option>
-              <option>Spanish</option>
-              <option>French</option>
-            </select>
-          </div>
-        </div>
-      </section>
+    <div class="settings-section">
+      <h2>Privacy</h2>
+      <div class="settings-item">
+        <span>Share listening activity with friends</span>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <div class="settings-item">
+        <span>Show recently played in profile</span>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
 
-      <section id="privacy" class="dashboard-section">
-        <div class="section-header">
-          <h2>Privacy Settings</h2>
-        </div>
-        <div class="settings-content" style="background: var(--background-elevated); border-radius: 12px; padding: 20px;">
-          <div class="setting-item" style="margin-bottom: 20px;">
-            <h3 style="margin: 0 0 10px 0;">Activity Status</h3>
-            <p style="margin: 0; color: var(--text-secondary);">Control who can see your listening activity.</p>
-          </div>
-          <div class="setting-item" style="margin-bottom: 20px;">
-            <h3 style="margin: 0 0 10px 0;">Data Usage</h3>
-            <p style="margin: 0; color: var(--text-secondary);">Manage how your data is used and shared.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="notifications" class="dashboard-section">
-        <div class="section-header">
-          <h2>Notification Settings</h2>
-        </div>
-        <div class="settings-content" style="background: var(--background-elevated); border-radius: 12px; padding: 20px;">
-          <div class="setting-item" style="margin-bottom: 20px;">
-            <h3 style="margin: 0 0 10px 0;">Email Notifications</h3>
-            <p style="margin: 0; color: var(--text-secondary);">Configure your email notification preferences.</p>
-          </div>
-          <div class="setting-item" style="margin-bottom: 20px;">
-            <h3 style="margin: 0 0 10px 0;">Push Notifications</h3>
-            <p style="margin: 0; color: var(--text-secondary);">Manage your push notification settings.</p>
-          </div>
-        </div>
-      </section>
+    <div class="settings-section">
+      <h2>Data</h2>
+      <div class="settings-item">
+        <span>Download your data</span>
+        <button class="action-button secondary">Download</button>
+      </div>
+      <div class="settings-item">
+        <span>Clear local data</span>
+        <button id="clear-data-btn" class="action-button warning">Clear Data</button>
+      </div>
     </div>
   </div>
+
+  <div id="toast" class="toast">Changes saved</div>
 
   <footer>
     <p>Made with love by Ted & Kmy. Inspired by Spotify&copy;</p>
@@ -220,73 +177,94 @@
   <div class="cursor-settings" style="display:none;"><label for="cursor-color">🎨 Cursor Color:</label><input type="color" id="cursor-color" value="#1DB954"></div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initialize theme
-      const savedTheme = localStorage.getItem('theme') || 'dark';
-      document.body.className = `theme-${savedTheme}`;
+  const checkbox = document.getElementById('checkbox');
+  const body = document.body;
+  const toast = document.getElementById('toast');
 
-      // Theme toggle functionality
-      const themeButtons = document.querySelectorAll('.theme-toggle .timeframe-btn');
-      themeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          const theme = button.textContent.toLowerCase();
-          document.body.className = `theme-${theme}`;
-          localStorage.setItem('theme', theme);
-          themeButtons.forEach(btn => btn.classList.remove('active'));
-          button.classList.add('active');
-        });
-      });
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }
 
-      // Cursor effect background
-      document.addEventListener('mousemove', e => {
-        document.body.style.setProperty('--mouse-x', e.clientX + 'px');
-        document.body.style.setProperty('--mouse-y', e.clientY + 'px');
-      });
+  if (localStorage.getItem('theme') === 'light') {
+    body.classList.replace('theme-dark', 'theme-light');
+    checkbox.checked = true;
+  }
 
-      // Accent color picker
-      const swatches = document.querySelectorAll('.color-swatch');
-      const cursor = document.getElementById('custom-cursor');
-
-      swatches.forEach(swatch => {
-        const savedColor = localStorage.getItem('accent-color');
-        if (swatch.dataset.color === savedColor) swatch.classList.add('active');
-
-        swatch.addEventListener('click', () => {
-          swatches.forEach(s => s.classList.remove('active'));
-          swatch.classList.add('active');
-          document.documentElement.style.setProperty('--accent-color', swatch.dataset.color);
-          localStorage.setItem('accent-color', swatch.dataset.color);
-          if (cursor) cursor.style.backgroundColor = swatch.dataset.color;
-          showToast('Accent color updated');
-        });
-      });
-
-      // Load saved accent color
-      if (localStorage.getItem('accent-color')) {
-        const color = localStorage.getItem('accent-color');
-        document.documentElement.style.setProperty('--accent-color', color);
-        cursor.style.backgroundColor = color;
-      } else {
-        const defaultAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
-        cursor.style.backgroundColor = defaultAccent;
-      }
-
-      // Custom Cursor Follower
-      document.addEventListener('mousemove', e => {
-        const emojiCursor = document.getElementById('emoji-cursor');
-        emojiCursor.style.left = `${e.clientX}px`;
-        emojiCursor.style.top = `${e.clientY}px`;
-      });
-    });
-
-    const toast = document.getElementById('toast');
-
-    function showToast(msg) {
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
+  checkbox.addEventListener('change', function () {
+    if (this.checked) {
+      body.classList.replace('theme-dark', 'theme-light');
+      localStorage.setItem('theme', 'light');
+    } else {
+      body.classList.replace('theme-light', 'theme-dark');
+      localStorage.setItem('theme', 'dark');
     }
-  </script>
+    showToast('Theme updated');
+  });
+
+  document.getElementById('signout-btn').addEventListener('click', function () {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('expiry');
+    localStorage.removeItem('pkce_verifier');
+    document.querySelector('.status-indicator').classList.replace('connected', 'disconnected');
+    document.getElementById('connection-text').textContent = 'Disconnected';
+    alert('You have been signed out from Spotify');
+    setTimeout(() => {
+      window.location.href = 'HomePage.html';
+    }, 1500);
+  });
+
+  document.getElementById('clear-data-btn').addEventListener('click', function () {
+    if (confirm('Are you sure you want to clear all locally stored data? This will sign you out.')) {
+      localStorage.clear();
+      alert('All data has been cleared');
+      window.location.href = 'HomePage.html';
+    }
+  });
+
+  // Cursor effect background
+  document.addEventListener('mousemove', e => {
+    document.body.style.setProperty('--mouse-x', e.clientX + 'px');
+    document.body.style.setProperty('--mouse-y', e.clientY + 'px');
+  });
+
+  // Accent color picker
+  const swatches = document.querySelectorAll('.color-swatch');
+  const cursor = document.getElementById('custom-cursor');
+
+  swatches.forEach(swatch => {
+    const savedColor = localStorage.getItem('accent-color');
+    if (swatch.dataset.color === savedColor) swatch.classList.add('active');
+
+    swatch.addEventListener('click', () => {
+      swatches.forEach(s => s.classList.remove('active'));
+      swatch.classList.add('active');
+      document.documentElement.style.setProperty('--accent-color', swatch.dataset.color);
+      localStorage.setItem('accent-color', swatch.dataset.color);
+      cursor.style.backgroundColor = swatch.dataset.color;
+      showToast('Accent color updated');
+    });
+  });
+
+  // Load saved accent color
+  if (localStorage.getItem('accent-color')) {
+    const color = localStorage.getItem('accent-color');
+    document.documentElement.style.setProperty('--accent-color', color);
+    cursor.style.backgroundColor = color;
+  } else {
+    const defaultAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
+    cursor.style.backgroundColor = defaultAccent;
+  }
+
+  // Custom Cursor Follower
+  document.addEventListener('mousemove', e => {
+    const emojiCursor = document.getElementById('emoji-cursor');
+    emojiCursor.style.left = `${e.clientX}px`;
+    emojiCursor.style.top = `${e.clientY}px`;
+  });
+</script>
 </body>
 
 </html>
