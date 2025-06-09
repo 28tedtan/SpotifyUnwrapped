@@ -148,11 +148,20 @@
       <!-- Login -->
       <div id="login-section" class="login-section">
         <h1>Discover Your Music Journey</h1>
-        <p>Connect your Spotify account to see your listening patterns, discover your most-played tracks, and share insights with friends.</p>
-        <button id="login-btn" class="login-button">
-          <span>Connect with Spotify</span>
-          <div class="border full-rounded"></div>
-        </button>
+        <p>Connect your Spotify account to see your listening patterns, discover your most-played tracks, and share insights with friends.  <br><br><small>Not showing? Go to settings and clear data!</small> </p> 
+        
+        <div style="display: flex; gap: 20px; justify-content: center;">
+          <!-- Enter Email First -->
+          <button onclick="window.location.href='emailform.html'" class="login-button">
+            <span>Enter Email First</span>
+            <div class="border full-rounded"></div>
+          </button>
+          <!-- Connect with Spotify -->
+          <button id="login-btn" class="login-button">
+            <span>Connect with Spotify</span>
+            <div class="border full-rounded"></div>
+          </button>
+        </div>
       </div>
 
       <!-- Dashboard -->
@@ -538,6 +547,16 @@
 
     // ─── MAIN INIT ────────────────────────────────────────────────────────────
     async function initApp() {
+      // Check if we should trigger OAuth
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('trigger_oauth') === 'true') {
+        // Remove the parameter from URL
+        history.replaceState({}, '', window.location.pathname);
+        // Start OAuth flow
+        login();
+        return;
+      }
+
       await handleCallback();
       const token      = localStorage.getItem('access_token');
       const isLoggedIn = token && await refreshIfNeeded();
