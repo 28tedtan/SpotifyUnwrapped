@@ -368,7 +368,7 @@
       if (!res.ok) throw new Error();
       return await res.json();
     }
-    async function fetchRecentlyPlayed(limit=10) {
+    async function fetchRecentlyPlayed(limit=7) {
       if (!await refreshIfNeeded()) return null;
       const token = localStorage.getItem('access_token');
       const res = await fetch(
@@ -500,6 +500,30 @@
       });
     }
 
+    function renderRecentlyPlayed(data) {
+      const container = document.querySelector('#recently-played .track-grid');
+      if (!data?.items?.length) {
+        container.innerHTML = '<div class="no-data">No recently played tracks found</div>';
+        return;
+      }
+      container.innerHTML = data.items.map(item => {
+        const track = item.track;
+        return `
+          <div class="track-card">
+            <div class="track-image">
+              <img src="${track.album.images[0]?.url || 'https://via.placeholder.com/200'}" 
+                   alt="${track.name}" />
+            </div>
+            <div class="track-info">
+              <div class="track-title">${track.name}</div>
+              <div class="track-artist">${track.artists.map(a => a.name).join(', ')}</div>
+              <div class="track-played">Played ${new Date(item.played_at).toLocaleString()}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
     // format ms → m:ss
     function fmt(ms) {
       const m = Math.floor(ms / 60000);
@@ -612,6 +636,9 @@
       // Initial Top Tracks + Artists with higher limits
       renderTopTracks(await fetchTopItems('tracks', 'medium_term', 20));
       renderTopArtists(await fetchTopItems('artists', 'medium_term', 20));
+      
+      // Render Recently Played
+      renderRecentlyPlayed(await fetchRecentlyPlayed(7));
 
       // NOW PLAYING POLLS
       setInterval(updateProgress,   500);   // every 0.5 s
