@@ -12,40 +12,73 @@
       background: linear-gradient(135deg, #000000 0%, #2f2f2f 100%);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 1rem;
+      color: white;
     }
     .error-container {
-      max-width: 600px;
+      max-width: 800px;
       width: 100%;
-      background: #d4d4d4;
+      background: #1a1a1a;
       border-radius: 1rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      padding: 3rem 2rem;
-      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      padding: 2rem;
+      margin-bottom: 2rem;
     }
-    .vinyl-animation {
+    .error-message {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 0.5rem;
+    }
+    .error-message h1 {
+      font-size: 2.5rem;
+      color: #1DB954;
+      margin-bottom: 1rem;
+    }
+    .error-message p {
+      color: #b3b3b3;
+      line-height: 1.6;
+    }
+    .now-playing {
+      background: #2a2a2a;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .vinyl-player {
       width: 200px;
       height: 200px;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+    .vinyl-disc {
+      width: 100%;
+      height: 100%;
       background: #1a1a1a;
       border-radius: 50%;
-      margin: 0 auto 2rem;
       position: relative;
       animation: spin 4s linear infinite;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
-    .grooves {
+    .vinyl-grooves {
       position: absolute;
       inset: 0;
       opacity: 0.2;
     }
-    .groove {
+    .vinyl-groove {
       position: absolute;
       inset: 0;
       border: 1px solid #ffffff;
       border-radius: 50%;
     }
-    .label {
+    .vinyl-label {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -59,26 +92,50 @@
       justify-content: center;
       color: white;
       font-weight: bold;
-      font-size: 2rem;
+      font-size: 1.5rem;
     }
     @keyframes spin {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-    h1 {
-      font-size: 2.5rem;
-      color: #333;
-      margin-bottom: 1rem;
+    .now-playing-info {
+      margin-left: 2rem;
+      text-align: left;
     }
-    p {
-      color: #666;
+    .now-playing-info h3 {
+      color: #1DB954;
+      margin-bottom: 0.5rem;
+    }
+    .now-playing-info p {
+      color: white;
+    }
+    .audio-visualizer {
+      width: 100%;
+      height: 200px;
+      background: #2a2a2a;
+      border-radius: 0.5rem;
       margin-bottom: 2rem;
-      line-height: 1.6;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 2px;
+    }
+    .visualizer-bar {
+      flex: 1;
+      background: #1DB954;
+      display: inline-block;
+      animation: equalize 1s ease infinite alternate;
+      opacity: 0.7;
+    }
+    @keyframes equalize {
+      0% { height: 20%; }
+      100% { height: 100%; }
     }
     .home-button {
       display: inline-block;
       padding: 0.75rem 2rem;
-      background: #1a1a1a;
+      background: #1DB954;
       color: white;
       text-decoration: none;
       border-radius: 0.5rem;
@@ -86,26 +143,49 @@
       transition: background-color 0.2s;
     }
     .home-button:hover {
-      background: #4a6553;
+      background: #1ed760;
     }
   </style>
 </head>
 <body>
   <div class="error-container">
-    <div class="vinyl-animation">
-      <div class="grooves"></div>
-      <div class="label">404</div>
+    <div class="error-message">
+      <h1>404 - Page Not Found</h1>
+      <p>Oops! Looks like this track is skipping. The page you're looking for doesn't exist or has been moved.</p>
     </div>
-    <h1>Page Not Found</h1>
-    <p>Oops! Looks like this track is skipping. The page you're looking for doesn't exist or has been moved.</p>
-    <a href="/" class="home-button">Return to Home</a>
+
+    <div class="now-playing" id="nowPlaying">
+      <div class="vinyl-player">
+        <div class="vinyl-disc">
+          <div class="vinyl-grooves"></div>
+          <div class="vinyl-label">404</div>
+        </div>
+      </div>
+      <div class="now-playing-info">
+        <h3>Now Playing:</h3>
+        <p>404 Page not found sorry :(</p>
+      </div>
+    </div>
+    
+    <div class="audio-visualizer" id="visualizer"></div>
   </div>
+
+  <a href="/" class="home-button">Return to Home</a>
 
   <script>
     // Create vinyl grooves
-    document.querySelector('.grooves').innerHTML = [...Array(20)].map((_, i) => 
-      `<div class="groove" style="transform:scale(${0.2+i*0.04})"></div>`
+    document.querySelector('.vinyl-grooves').innerHTML = [...Array(20)].map((_, i) => 
+      `<div class="vinyl-groove" style="transform:scale(${0.2+i*0.04})"></div>`
     ).join('');
+
+    // Create visualizer bars
+    const visualizer = document.getElementById('visualizer');
+    for (let i = 0; i < 100; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'visualizer-bar';
+      bar.style.animationDelay = `${i * 0.01}s`;
+      visualizer.appendChild(bar);
+    }
   </script>
 </body>
 </html> 
