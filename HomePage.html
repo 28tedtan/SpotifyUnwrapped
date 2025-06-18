@@ -387,7 +387,11 @@
         container.innerHTML = '<div class="no-data">No tracks found</div>';
         return;
       }
-      container.innerHTML = data.items.map((track, i) => `
+      
+      // Sort tracks by popularity (play count) in descending order
+      const sortedTracks = data.items.sort((a, b) => b.popularity - a.popularity);
+      
+      container.innerHTML = sortedTracks.map((track, i) => `
         <div class="track-card">
           <div class="track-image">
             <img src="${track.album.images[0]?.url || 'https://via.placeholder.com/200'}" 
