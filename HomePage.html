@@ -84,6 +84,7 @@
       <ul class="nav-menu">
         <li class="nav-item"><a href="HomePage.html" class="nav-link">Home</a></li>
         <li class="nav-item"><a href="friends.html" class="nav-link">Friends</a></li>
+        <li class="nav-item"><a href="trending.html" class="nav-link">Trending</a></li>
         <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
         <li class="nav-item"><a href="settings.html" class="nav-link">Settings</a></li>
       </ul>
@@ -390,7 +391,7 @@
       
       // Sort tracks by popularity (play count) in descending order
       const sortedTracks = data.items.sort((a, b) => b.popularity - a.popularity);
-      
+
       container.innerHTML = sortedTracks.map((track, i) => `
         <div class="track-card">
           <div class="track-image">
